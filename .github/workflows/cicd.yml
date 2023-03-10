@@ -21,7 +21,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: PWD
-        run: cd var/www/html && ls -a
+        run: cd usr && ls -a
       - name: LS
         run: ls
       # - name: Sync files to S3
