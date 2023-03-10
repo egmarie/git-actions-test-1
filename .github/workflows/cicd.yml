@@ -1,0 +1,56 @@
+name: 'Terraform Git Action - Liz'
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+
+# Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or winddows-latest
+defaults:
+  run:
+    shell: bash
+    working-directory: /
+jobs:
+  s3_sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: PWD
+        run: cd var/www/html && ls -a
+      - name: f
+        run: find s3
+      - name: LS
+        run: ls
+      - name: Sync files to S3
+        run: aws s3 sync . s3://ar-portfolio-v1
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: us-east-1
+ 
+  start_node_server:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [18.x,19.x]
+    steps:
+      - name: code checkout 
+        uses: actions/checkout@v3
+      - name: Start npm server
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+          cache-dependency-path: '/package-lock.json'
+      - name: Install dependencies
+        run: npm install
+        # working-directory: /s3/terraform-ci-cd/git-actions
+      - name: Build website
+        run: npm run build
+        # working-directory: /s3/terraform-ci-cd/git-actions
+
