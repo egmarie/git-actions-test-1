@@ -29,7 +29,8 @@ jobs:
       - name: S3 Sync
         uses: jakejarvis/s3-sync-action@v0.5.1
         with:
-          args: --acl public-read --follow-symlinks --delete
+          #args: --acl public-read --follow-symlinks --delete
+          args: --acl public-read --follow-symlinks --delete --exclude '.git/*' --exclude '.github/*'
 
         env:
           AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
@@ -41,7 +42,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [19.x]
+        node-version: [19.5.0]
     steps:
       - name: code checkout 
         uses: actions/checkout@v3
