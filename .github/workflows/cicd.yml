@@ -22,8 +22,6 @@ jobs:
     steps:
       - name: PWD
         run: cd var/www/html && ls -a
-      - name: f
-        run: find s3
       - name: LS
         run: ls
       - name: Sync files to S3
@@ -37,7 +35,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [18.x,19.x]
+        node-version: [19.x]
     steps:
       - name: code checkout 
         uses: actions/checkout@v3
