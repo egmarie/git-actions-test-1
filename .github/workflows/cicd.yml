@@ -21,7 +21,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: hmm
-        uses: actions/checkout@v3
+        uses: actions/checkout@main
       - name: PWD
         run: pwd && ls
       - name: LS
