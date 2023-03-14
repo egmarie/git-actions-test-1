@@ -1,61 +1,61 @@
-name: 'Terraform Git Action - Liz'
+# name: 'Terraform Git Action - Liz'
 
-on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+# on:
+#   push:
+#     branches: [ "main" ]
+#   pull_request:
+#     branches: [ "main" ]
 
-permissions:
-  contents: read
-  pull-requests: write
+# permissions:
+#   contents: read
+#   pull-requests: write
 
 
-# Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or winddows-latest
-defaults:
-  run:
-    shell: bash
-    # working-directory: /
-jobs:
-  s3_sync:
-    runs-on: ubuntu-latest
-    steps:
-      # - name: PWD
-      #   run: cd usr/src && ls -a
-      # - name: LS
-      #   run: ls
-      # - name: Sync files to S3
-      #   run: aws s3 sync . s3://ar-portfolio-v1
-      - name: S3 Sync
-        uses: jakejarvis/s3-sync-action@v0.5.1
-        with:
-          #args: --acl public-read --follow-symlinks --delete
-          args: --acl public-read --follow-symlinks --delete --exclude '.git/*' --exclude '.github/*'
+# # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or winddows-latest
+# defaults:
+#   run:
+#     shell: bash
+#     # working-directory: /
+# jobs:
+#   s3_sync:
+#     runs-on: ubuntu-latest
+#     steps:
+#       # - name: PWD
+#       #   run: cd usr/src && ls -a
+#       # - name: LS
+#       #   run: ls
+#       # - name: Sync files to S3
+#       #   run: aws s3 sync . s3://ar-portfolio-v1
+#       - name: S3 Sync
+#         uses: jakejarvis/s3-sync-action@v0.5.1
+#         with:
+#           #args: --acl public-read --follow-symlinks --delete
+#           args: --acl public-read --follow-symlinks --delete --exclude '.git/*' --exclude '.github/*'
 
-        env:
-          AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_DEFAULT_REGION: us-east-1
+#         env:
+#           AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
+#           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+#           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+#           AWS_DEFAULT_REGION: us-east-1
  
-  start_node_server:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [19.5.0]
-    steps:
-      - name: code checkout 
-        uses: actions/checkout@v3
-      - name: Start npm server
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ matrix.node-version }}
-          cache: 'npm'
-          cache-dependency-path: '/package-lock.json'
-      - name: Install dependencies
-        run: npm install
-        # working-directory: /s3/terraform-ci-cd/git-actions
-      - name: Build website
-        run: npm run build
-        # working-directorydd: /s3/terraform-ci-cd/git-actions
+#   start_node_server:
+#     runs-on: ubuntu-latest
+#     strategy:
+#       matrix:
+#         node-version: [19.5.0]
+#     steps:
+#       - name: code checkout 
+#         uses: actions/checkout@v3
+#       - name: Start npm server
+#         uses: actions/setup-node@v3
+#         with:
+#           node-version: ${{ matrix.node-version }}
+#           cache: 'npm'
+#           cache-dependency-path: '/package-lock.json'
+#       - name: Install dependencies
+#         run: npm install
+#         # working-directory: /s3/terraform-ci-cd/git-actions
+#       - name: Build website
+#         run: npm run build
+#         # working-directorydd: /s3/terraform-ci-cd/git-actions
 
