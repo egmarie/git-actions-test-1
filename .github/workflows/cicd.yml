@@ -22,8 +22,8 @@ jobs:
     steps:
       # - name: PWD
       #   run: cd usr/src && ls -a
-      - name: LS
-        run: ls
+      # - name: LS
+      #   run: ls
       # - name: Sync files to S3
       #   run: aws s3 sync . s3://ar-portfolio-v1
       - name: S3 Sync
