@@ -6,9 +6,9 @@ on:
   pull_request:
     branches: [ "main" ]
 
-permissions:
-  contents: read
-  pull-requests: write
+# permissions:
+#   contents: read
+#   pull-requests: write
 
 
 # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or winddows-latest
@@ -38,7 +38,7 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_DEFAULT_REGION: us-east-1
-          # SOURCE_DIR: ../
+          SOURCE_DIR: /Users/egmarie/Desktop/DEV/2023_Projects/git-actions-solo
  
   # start_node_server:
   #   runs-on: ubuntu-latest
