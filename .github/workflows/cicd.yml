@@ -23,7 +23,7 @@ jobs:
       - name: PWD
         run: pwd
       - name: LS
-        run: cd ../../.. && ls && pwd 
+        run: cd ../../../.. && ls && pwd 
         # run: cd .. && ls
       # - name: Sync files to S3
       #   run: aws s3 sync . s3://ar-portfolio-v1
