@@ -20,8 +20,8 @@ jobs:
   s3_sync:
     runs-on: ubuntu-latest
     steps:
-      # - name: PWD
-      #   run: cd usr/src && ls -a
+      - name: PWD
+        run: cd home && ls -a
       # - name: LS
       #   run: ls
       # - name: Sync files to S3
