@@ -20,6 +20,8 @@ jobs:
   s3_sync:
     runs-on: ubuntu-latest
     steps:
+      - name: hmm
+        uses: actions/checkout@v3
       - name: PWD
         run: pwd && ls
       - name: LS
