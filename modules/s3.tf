@@ -53,10 +53,10 @@ resource "aws_s3_bucket_public_access_block" "block_public_access" {
 #   source = "../"
 # }
 resource "aws_s3_bucket_object" "dist" {
-  for_each = fileset("../src", "*")
+  for_each = fileset("../src/", "*")
   bucket = aws_s3_bucket.static_ar_bucket-1.id
   key    = each.value
-  source = "../${each.value}"
+  source = "../src/${each.value}"
   # etag makes the file update when it changes; see https://stackoverflow.com/questions/56107258/terraform-upload-file-to-s3-on-every-apply
-  etag   = filemd5("../${each.value}")
+  etag   = filemd5("../src/${each.value}")
 }
