@@ -21,7 +21,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: PWD
-        run: pwd
+        run: pwd && ls
       - name: LS
         run: cd ../../.. && ls && pwd  
         # run: cd .. && ls
