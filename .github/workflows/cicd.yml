@@ -23,7 +23,7 @@ jobs:
       - name: PWD
         run: pwd
       - name: LS
-        run: cd ../../../../.. && ls && pwd 
+        run: cd ../../../../.. && ls && pwd && find  
         # run: cd .. && ls
       # - name: Sync files to S3
       #   run: aws s3 sync . s3://ar-portfolio-v1
@@ -38,7 +38,7 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_DEFAULT_REGION: us-east-1
-          SOURCE_DIR: ../*
+          # SOURCE_DIR: ../
  
   # start_node_server:
   #   runs-on: ubuntu-latest
