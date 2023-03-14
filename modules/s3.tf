@@ -51,10 +51,9 @@ resource "aws_s3_bucket_public_access_block" "block_public_access" {
 #   bucket = "test-terraform-pawan-1"
 #   key     = "index.html"
 #   source = "../"
-
 # }
 resource "aws_s3_bucket_object" "dist" {
-  for_each = fileset("../", "*")
+  for_each = fileset("../src", "*")
   bucket = aws_s3_bucket.static_ar_bucket-1.id
   key    = each.value
   source = "../${each.value}"
