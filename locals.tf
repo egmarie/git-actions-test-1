@@ -1,3 +1,3 @@
 locals {
-  s3_origin_id = "s3-cloudfront-link"
+  s3_origin_id = "ar-portfolio-v1"
 }
