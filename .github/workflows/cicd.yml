@@ -35,7 +35,7 @@ jobs:
           role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
           # role-external-id:a ${{ secrets.AWSd_ROLE_EXTERNAL_ID }}
           role-duration-seconds: 1200
-          # role-session-name: Sync-2-S3
+          # role-session-name: Sync-2-S3dd
 
         # run: cd .. && ls
       - name: Sync files to S3
