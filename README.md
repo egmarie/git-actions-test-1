@@ -24,5 +24,10 @@
 3. Cmd + click on the localhost listed
 
 
+## Git Actions Notes
+- Aws Credentials for Git action
+    + https://github.com/aws-actions/configure-aws-credentials
+
+
 
  

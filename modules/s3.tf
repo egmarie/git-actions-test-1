@@ -27,6 +27,29 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "encrypt" {
   }
 }
 # tf registry
+resource "aws_s3_bucket_policy" "allow_access_from_another_account" {
+  bucket = aws_s3_bucket.static_ar_bucket-1.id
+  policy = data.aws_iam_policy_document.allow_access_from_another_account.json
+}
+
+data "aws_iam_policy_document" "allow_access_from_oac" {
+  statement {
+    principals {
+      type        = "Service"
+      identifiers = ["cloudfront.amazonaws.com"]
+    }
+
+    actions = [
+      "s3:GetObject",
+    ]
+
+    resources = [
+      aws_s3_bucket.static_ar_bucket-1.arn,
+      "${aws_s3_bucket.static_ar_bucket-1.arn}/*",
+    ]
+  }
+}
+
 
 resource "aws_s3_bucket_public_access_block" "block_public_access" {
   bucket                  = aws_s3_bucket.static_ar_bucket-1.id
