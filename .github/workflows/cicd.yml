@@ -28,7 +28,7 @@ jobs:
         run: cd ../../.. && ls && pwd  
         # run: cd .. && ls
       - name: Sync files to S3
-        run: aws s3 sync --profile liz-bluesky . s3://ar-portfolio-v1
+        run: aws s3 sync --profile liz-bluesky-1 . s3://ar-portfolio-v1
       # - name: S3 Sync
         #
         # uses: jakejarvis/s3-sync-action@v0.5.1
