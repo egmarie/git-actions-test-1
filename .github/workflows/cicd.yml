@@ -39,8 +39,8 @@ jobs:
         # run: cd .. && ls
       - name: Sync files to S3
         run: aws s3 sync . s3://ar-portfolio-v1
-        with:
-          args: --acl public-read --follow-symlinks --delete --exclude '.git/*' --exclude '.github/*'
+        # with:
+        #   args: --acl public-read --follow-symlinks --delete --exclude '.git/*' --exclude '.github/*'
  
   start_node_server:
     runs-on: ubuntu-latest
