@@ -27,7 +27,7 @@ jobs:
       - name: LS
         run: cd ../../.. && ls && pwd
       - name: Configure AWS credentials from Account
-        uses: aws-actions/configure-aws-credentials@v3
+        uses: aws-actions/configure-aws-credentials@v2
         with:
           aws-region: us-east-1
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
