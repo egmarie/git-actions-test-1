@@ -21,14 +21,20 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: hmm
-        uses: actions/checkout@main
+        uses: actions/checkout@v3
       - name: PWD
         run: pwd && ls
       - name: LS
-        run: cd ../../.. && ls && pwd  
+        run: cd ../../.. && ls && pwd
+      - name: Configure AWS credentials from Account
+        uses: aws-actions/configure-aws-credentials@v2
+        with: 
+          role-to-assume: arn:aws:iam::686487091234:role/s3-git-actions-access
+          aws-region: us-east-1
+
         # run: cd .. && ls
       - name: Sync files to S3
-        run: aws s3 sync --profile liz-bluesky-1 . s3://ar-portfolio-v1
+        run: aws s3 sync . s3://ar-portfolio-v1
       # - name: S3 Sync
         #
         # uses: jakejarvis/s3-sync-action@v0.5.1
