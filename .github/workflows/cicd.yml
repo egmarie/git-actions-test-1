@@ -12,7 +12,6 @@ on:
 defaults:
   run:
     shell: bash
-    working-directory: /
 jobs:
   s3_sync:
     runs-on: ubuntu-latest
@@ -24,8 +23,8 @@ jobs:
         uses: actions/checkout@v3
       - name: PWD
         run: pwd && ls
-      - name: LS
-        run: cd ../../.. && ls && pwd
+      # - name: LS
+      #   run: cd ../../.. && ls && pwd
       - name: Configure AWS credentials from Account
         uses: aws-actions/configure-aws-credentials@v2
         with:
