@@ -29,7 +29,7 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "encrypt" {
 # tf registry
 resource "aws_s3_bucket_policy" "allow_access_from_another_account" {
   bucket = aws_s3_bucket.static_ar_bucket-1.id
-  policy = data.aws_iam_policy_document.allow_access_from_another_account.json
+  policy = data.aws_iam_policy_document.allow_access_from_oac.json
 }
 
 data "aws_iam_policy_document" "allow_access_from_oac" {
