@@ -47,7 +47,14 @@ data "aws_iam_policy_document" "allow_access_from_oac" {
       aws_s3_bucket.static_ar_bucket-1.arn,
       "${aws_s3_bucket.static_ar_bucket-1.arn}/*",
     ]
+    condition {
+            test = "StringEquals"
+            values = [
+                "arn:aws:cloudfront::686487091234:distribution/E12PBOOPSGUSQL"
+            ]
+            variable = "aws:SourceArn"
   }
+}
 }
 
 
