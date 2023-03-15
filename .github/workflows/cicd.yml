@@ -6,9 +6,6 @@ on:
   pull_request:
     branches: [ "main" ]
 
-# permissions:
-#   contents: read
-#   pull-requests: write
 
 
 # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or winddows-latest
@@ -19,6 +16,9 @@ defaults:
 jobs:
   s3_sync:
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
     steps:
       - name: hmm
         uses: actions/checkout@v3
@@ -28,13 +28,19 @@ jobs:
         run: cd ../../.. && ls && pwd
       - name: Configure AWS credentials from Account
         uses: aws-actions/configure-aws-credentials@v2
-        with: 
-          role-to-assume: arn:aws:iam::686487091234:role/s3-git-actions-access
+        with:
           aws-region: us-east-1
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
+          role-external-id: ${{ secrets.AWS_ROLE_EXTERNAL_ID }}
+          role-duration-seconds: 1200
+          role-session-name: MySessionName
 
         # run: cd .. && ls
       - name: Sync files to S3
         run: aws s3 sync . s3://ar-portfolio-v1
+
       # - name: S3 Sync
         #
         # uses: jakejarvis/s3-sync-action@v0.5.1
