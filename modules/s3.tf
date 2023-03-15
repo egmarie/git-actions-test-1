@@ -51,13 +51,13 @@ data "aws_iam_policy_document" "allow_access_from_oac" {
 }
 
 
-resource "aws_s3_bucket_public_access_block" "block_public_access" {
-  bucket                  = aws_s3_bucket.static_ar_bucket-1.id
-  block_public_acls       = true
-  block_public_policy     = true
-  ignore_public_acls      = true
-  restrict_public_buckets = true
-}
+# resource "aws_s3_bucket_public_access_block" "block_public_access" {
+#   bucket                  = aws_s3_bucket.static_ar_bucket-1.id
+#   # block_public_acls       = true
+#   # block_public_policy     = true
+#   # ignore_public_acls      = true
+#   # restrict_public_buckets = true
+# }
 
 resource "aws_s3_bucket_object" "dist" {
   for_each = fileset("../src/", "*")
@@ -66,4 +66,24 @@ resource "aws_s3_bucket_object" "dist" {
   source   = "../src/${each.value}"
   # etag makes the file update when it changes; see https://stackoverflow.com/questions/56107258/terraform-upload-file-to-s3-on-every-apply
   etag     = filemd5("../src/${each.value}")
+}
+
+resource "aws_s3_bucket_website_configuration" "example" {
+  bucket = aws_s3_bucket.static_ar_bucket-1.id
+
+  index_document {
+    suffix = "index.html"
+  }
+  # error_document {
+  #   key = "error.html"
+  # }
+
+  # routing_rule {
+  #   condition {
+  #     key_prefix_equals = "docs/"
+  #   }
+  #   redirect {
+  #     replace_key_prefix_with = "documents/"
+  #   }
+  # }
 }
