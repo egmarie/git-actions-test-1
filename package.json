@@ -15,7 +15,7 @@
     "@tweakpane/core": "^1.1.4",
     "@tweakpane/plugin-essentials": "^0.1.8",
     "@types/dat.gui": "^0.7.7",
-    "@types/node": "^18.13.0",
+    "@types/node": "^18.15.3",
     "@types/react-router-dom": "^5.3.3",
     "@types/three": "^0.149.0",
     "3d": "^0.0.0",
