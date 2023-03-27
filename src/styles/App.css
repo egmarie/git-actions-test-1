@@ -39,6 +39,9 @@ body {
   font-size: 0.8rem;
 }
 
+#logo {
+  width: 15em;
+}
 
 .footer a {
   color: #6b84cc;
