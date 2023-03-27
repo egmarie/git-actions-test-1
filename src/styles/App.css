@@ -14,9 +14,20 @@ body {
 }
 
 #main, #canvas-container {
-  height: 80vh;
+  margin: 0px;
+}
+#canvas-container {
+  margin: 0px;
 }
 
+#Wide {
+  width: 90%;
+  max-width: 1800px;
+  height: 80vh;
+  justify-content: center;
+  display: flex;
+  margin: auto;
+}
 .footer {
   position: fixed;
   bottom: 0;
@@ -39,6 +50,7 @@ body {
   position: absolute;
   z-index: 30;
 }
+
 
 #full {
   position: absolute;

@@ -10,8 +10,8 @@ extend({ Html, useFrame, THREE })
 import { CamContext } from '../-main-x';
 
 // Style
-import '../../styles/App.css'
-import '../../styles/index.css'
+// import '../../styles/App.css'
+// import '../../styles/index.css'
 
 //
 //
@@ -32,14 +32,14 @@ export default function Buttons() {
         useFrame(state => {
           if (camera.fullmap === true && clicked === true) {
             camera.setCam(vec)
-            state.camera.position.lerp(vec.set(0, 0, 10), .01)
+            state.camera.position.lerp(vec.set(0, 0, 15), .01)
             state.camera.updateProjectionMatrix()
           }
         })
 
   return (
-      <Html>
-        <div className="btnContainer">
+      <Html zIndexRange={5000000}>
+        <div id="btnContainer">
             <button type="button" id="full" className="rounded-full" onClick={() => changePos()}>
               <img id="fullmap-icon" alt="Fullscreen button" src="/icon-fullscreen.png" />
             </button>

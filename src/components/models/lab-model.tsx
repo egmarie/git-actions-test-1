@@ -1,5 +1,3 @@
-import '../../styles/App.css'
-
 import { Suspense } from "react";
 
 import { useLoader } from '@react-three/fiber'

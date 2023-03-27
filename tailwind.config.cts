@@ -13,7 +13,6 @@ module.exports = {
       purple: '#535bf2',
     }
   },
-
   },
   plugins: [
     require('tailwindcss'),
