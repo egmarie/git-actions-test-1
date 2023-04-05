@@ -45,17 +45,9 @@ jobs:
   start_node_server:
     runs-on: ubuntu-latest
     steps:
-      - name: code checkout 
+      - name: docker build
         run: docker build -t egma34y/3d-portfolio:0.0.0.RELEASE .
-      # - name: Start npm server
-      #   uses: actions/setup-node@v3
-      #   with:
-      #     node-version: ${{ matrix.node-version }}
-      #     cache: 'npm'
-      #     cache-dependency-path: '/package-lock.json'
-      # - name: Install dependencies
-      #   run: npm install
-      # - name: Build website
-      #   run: npm run build
+      - name: docker run 
+        run: docker container run -d -p 3000:3000 egma34y/3d-portfolio:0.0.0.RELEASE
   
 
