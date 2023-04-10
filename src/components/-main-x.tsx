@@ -13,7 +13,10 @@ import { Volcap } from './-projects/volcap'
 import { VR } from './-projects/vr'
 import Camera from './-elements/camera'
 import Buttons from './-elements/buttons'
+import InfoPanel from './-elements/infoPanel'
 import Intro1 from './-projects/intro'
+
+
 
 // Create Context
 export const CamContext = createContext<CamContextType | null>(null);
@@ -29,13 +32,15 @@ export function AppFiber() {
   return (
     <>
 <div id="Wide" className="d-flex flex-row">
-        <Intro1 />
+        { window.location.pathname === '/' ? <Intro1 /> : ''}
         <CamContext.Provider value={{camPos, setCam, fullmap, setMap, scenes, setScene}}>
               
               <Canvas shadows >
+                     <InfoPanel />
                     <Buttons />
                     <Camera />
                     <color attach="background" args={['#ffffff']} />
+
 
                     <ambientLight intensity={0.9} color={0xffffff} />
                     <directionalLight color={0xFCFC4D} position={[0, 2, 5]} />

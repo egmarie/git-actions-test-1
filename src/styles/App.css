@@ -53,6 +53,15 @@ body {
   position: absolute;
   z-index: 30;
 }
+#panelContainer {
+  position: absolute;
+  z-index: 40;
+}
+#panel {
+  width: 10em;
+  height: auto;
+  background-color:rgba(160,214,255,0.7);
+}
 
 
 #full {
@@ -65,10 +74,10 @@ body {
   border: none;
   padding: .5rem;
   margin: .5rem;
-  background-color:rgba(255,255,255,0.5);
+  background-color:rgba(255,255,255,0.8);
   transform: none;
 }
-#fullmap-icon {
-  width: 100%;
+#fullmap-icon, #more {
+  width: 2em;
   height: auto;
 }

@@ -26,6 +26,7 @@ export const Aria = () => {
     camera.setScene(sceneName)
   }
 
+
 // Camera and Rotation
     useFrame(state => {
     // On scene selection, change camera from React Context

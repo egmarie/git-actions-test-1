@@ -9,7 +9,6 @@ import Footer from './components/nav/footer'
 import Nav from './components/nav/nav'
 
 
-
     
 function App() {
    
@@ -17,13 +16,17 @@ function App() {
     {
       path: "/",
       element: <AppFiber />
+    },
+    {
+      path: "/innovate",
+      element: <AppFiber />
     }
   ]);
 
   return (
     <div className="App">
       <Nav />
-      <RouterProvider router={router}/>
+      <RouterProvider router={router} />
       <Footer />
     </div>
   )
