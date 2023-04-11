@@ -5,7 +5,7 @@ import { PerspectiveCamera } from '@react-three/drei'
 import { CamContext } from '../-main-x';
 extend({ useFrame, PerspectiveCamera, useThree, THREE })
 
-export default function Camera() {
+export function Camera() {
     const camera = useContext(CamContext);
     const camRef = useRef();
 

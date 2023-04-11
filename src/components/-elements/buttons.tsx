@@ -15,7 +15,7 @@ import { CamContext } from '../-main-x';
 
 //
 //
-export default function Buttons() {
+export function Buttons() {
 
 
       const camera = useContext(CamContext);
@@ -43,9 +43,6 @@ export default function Buttons() {
             <button type="button" id="full" className="rounded-full" onClick={() => changePos()}>
               <img id="fullmap-icon" alt="Fullscreen button" src="/icon-fullscreen.png" />
             </button>
-            {/* <button type="button" id="vr" className="m-2 p-2">VR</button>
-            <button type="button" id="vc" className="m-2 p-2">Volumetric Capture</button>
-            <button type="button" id="aria" className="m-2 p-2">ARIA</button> */}
           </div>
       </Html>
 )

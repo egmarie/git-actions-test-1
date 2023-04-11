@@ -11,14 +11,15 @@ import fragmentShader from '../shaders/fragment1.glsl'
 
 // Context
 import { CamContext } from '../-main-x';
-
+ 
 
 //
 //
 export const Aria = () => {
-  const camera = useContext(CamContext);
-  const refA = useRef<Mesh<BufferGeometry>>(null); 
+  const ref = useRef<Mesh<BufferGeometry>>(null);
+  const camera = useContext(CamContext); 
   const vec = new THREE.Vector3
+  //ref: <Mesh<BufferGeometry>>(null)
 
 // Select Scene
   function startClick(sceneName: string) {
@@ -31,15 +32,15 @@ export const Aria = () => {
     useFrame(state => {
     // On scene selection, change camera from React Context
         if (camera.scenes === 'Aria' && camera.fullmap === false) {
-          state.camera.lookAt(refA.current.position)
-          state.camera.position.lerp(vec.set(refA.current.position.x, refA.current.position.y, refA.current.position.z + 5), .01)
-          camera.setCam(vec.set(refA.current.position.x, refA.current.position.y, refA.current.position.z + 5))
+          state.camera.lookAt(ref.current.position)
+          state.camera.position.lerp(vec.set(ref.current.position.x, ref.current.position.y, ref.current.position.z + 5), .01)
+          camera.setCam(vec.set(ref.current.position.x, ref.current.position.y, ref.current.position.z + 5))
           state.camera.updateProjectionMatrix()
         }
   // Square Rotation
         const a = state.clock.getElapsedTime();  
-        refA.current.rotation.x = a * 1.2;
-        refA.current.rotation.y = a * 1.5;
+        ref.current.rotation.x = a * 1.2;
+        ref.current.rotation.y = a * 1.5;
         return null
     })
 
@@ -53,8 +54,8 @@ export const Aria = () => {
 
 
   return (
-    <mesh position={[7, -1, -8]} ref={refA} onClick={ () => startClick('Aria') } >
-      <boxGeometry args={[1, 1, 1]} />
+    <mesh position={[7, -1, -8]} ref={ref} onClick={ () => startClick('Aria') } >
+      <boxGeometry args={[1, 1, 1]} userData={{ name: "aria" }} />
       <shaderMaterial
         uniforms={uniforms}
         fragmentShader={fragmentShader}

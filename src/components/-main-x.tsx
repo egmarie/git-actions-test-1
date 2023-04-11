@@ -8,12 +8,8 @@ extend({ Canvas, Html, useFrame, THREE, PerspectiveCamera, useThree, Flex, Box }
 
 // Scene Imports
 import { CamContextType } from './config/@types.context';
-import { Aria } from './-projects/aria'
-import { Volcap } from './-projects/volcap'
-import { VR } from './-projects/vr'
-import Camera from './-elements/camera'
-import Buttons from './-elements/buttons'
-import InfoPanel from './-elements/infoPanel'
+import { Aria, Volcap, VR } from './-projects/index'
+import { InfoPanel, Buttons, Camera } from './-elements/index'
 import Intro1 from './-projects/intro'
 
 
@@ -23,7 +19,8 @@ export const CamContext = createContext<CamContextType | null>(null);
 
 //
 //
-export function AppFiber() {
+export const AppFiber: React.FunctionComponent = () => {
+
 
   const [ camPos, setCam ] = useState(new THREE.Vector3(0, 0, 40));
   const [ fullmap, setMap ] = useState(true);
@@ -35,8 +32,9 @@ export function AppFiber() {
         { window.location.pathname === '/' ? <Intro1 /> : ''}
         <CamContext.Provider value={{camPos, setCam, fullmap, setMap, scenes, setScene}}>
               
-              <Canvas shadows >
-                     <InfoPanel />
+              <Canvas shadows>
+                    
+                    { window.location.pathname === '/innovate' ? <InfoPanel /> : ''}
                     <Buttons />
                     <Camera />
                     <color attach="background" args={['#ffffff']} />
@@ -49,8 +47,9 @@ export function AppFiber() {
                     {/* <ToonLabModel /> */}
                     
                     <Aria />
-                    <Volcap  />
-                    <VR  />
+                    <Volcap />
+                    <VR />
+
                 </Canvas>
 
         </CamContext.Provider>

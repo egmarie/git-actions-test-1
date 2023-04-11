@@ -1,6 +1,7 @@
 // React | Three Imports
 import { useFrame, extend } from '@react-three/fiber'
 import * as THREE from 'three'
+import { Link } from 'react-router-dom'
 import { Html} from '@react-three/drei'
 extend({ Html, useFrame, THREE })
 
@@ -22,7 +23,7 @@ export default function Intro1() {
                     <div className="p-2">
                         <h6>We specialize in emerging tech that solves problems and imporves customer experiments.</h6>
                     </div>
-                    <button type="button">Learn more in 3D</button>
+                    <Link type="button" to="/innovate">Learn more in 3D</Link>
                    
             </div>
 

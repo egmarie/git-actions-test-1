@@ -18,5 +18,6 @@ module.exports = {
     require('tailwindcss'),
     require('autoprefixer'),
     require('@tailwindcss/forms'),
+    require("tw-elements/dist/plugin"),
   ],
 }

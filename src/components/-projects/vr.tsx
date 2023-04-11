@@ -16,8 +16,8 @@ import { CamContext } from '../-main-x';
 //
 //
 export const VR = () => {
-
-    const refVr = useRef<Mesh<BufferGeometry>>(null);
+  const ref = useRef<Mesh<BufferGeometry>>(null);
+    
     const camera = useContext(CamContext);
     const vec = new THREE.Vector3
 
@@ -33,15 +33,15 @@ export const VR = () => {
 
         // On scene selection, change camera from React Context
             if (camera.scenes === 'VR' && camera.fullmap === false) {
-                state.camera.lookAt(refVr.current.position)
-                state.camera.position.lerp(vec.set(refVr.current.position.x, refVr.current.position.y, refVr.current.position.z + 5), .01)
-                camera.setCam(vec.set(refVr.current.position.x, refVr.current.position.y, refVr.current.position.z + 5))
+                state.camera.lookAt(ref.current.position)
+                state.camera.position.lerp(vec.set(ref.current.position.x, ref.current.position.y, ref.current.position.z + 5), .01)
+                camera.setCam(vec.set(ref.current.position.x, ref.current.position.y, ref.current.position.z + 5))
                 state.camera.updateProjectionMatrix()  
             }
         // Square Rotation
             const a = state.clock.getElapsedTime();     
-            refVr.current.rotation.x = a * 1.2;
-            refVr.current.rotation.y = a * 1.5;
+            ref.current.rotation.x = a * 1.2;
+            ref.current.rotation.y = a * 1.5;
         return null
       })
 
@@ -54,9 +54,8 @@ export const VR = () => {
 
   return (
 
-    <mesh position={[-6.5, -2.7, -12]} ref={refVr} onClick={() => startClick('VR') } >
-      <boxGeometry args={[1, 1, 1]} />
-      <meshToonMaterial />
+    <mesh position={[-6.5, -2.7, -12]} ref={ref} onClick={() => startClick('VR') } >
+      <boxGeometry args={[1, 1, 1]} userData={{ name: "vr" }} />
       <shaderMaterial
         uniforms={uniforms}
         fragmentShader={fragmentShader}
