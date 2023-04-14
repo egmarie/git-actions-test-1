@@ -58,7 +58,7 @@ body {
   z-index: 40;
 }
 #panel {
-  width: 30em;
+  width: 20em;
   height: auto;
   background-color:rgba(160,214,255,0.7);
   top: 50;

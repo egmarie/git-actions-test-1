@@ -1,3 +1,3 @@
 export { Buttons } from './buttons'
 export { Camera } from './camera'
-export { InfoPanel } from './infoPanel'
+export { PanelWrapper } from './panel-wrap'

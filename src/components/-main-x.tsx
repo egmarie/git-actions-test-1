@@ -9,7 +9,7 @@ extend({ Canvas, Html, useFrame, THREE, PerspectiveCamera, useThree, Flex, Box }
 // Scene Imports
 import { CamContextType } from './config/@types.context';
 import { Aria, Volcap, VR } from './-projects/index'
-import { InfoPanel, Buttons, Camera } from './-elements/index'
+import { PanelWrapper, Buttons, Camera } from './-elements/index'
 import Intro1 from './-projects/intro'
 
 // Create Context
@@ -33,7 +33,7 @@ export const AppFiber: React.FunctionComponent = () => {
               <Canvas shadows>
 
                     
-                    { window.location.pathname === '/innovate' ? <InfoPanel /> : ''}
+                    { window.location.pathname === '/innovate' ? <PanelWrapper /> : ''}
                     <Buttons />
                     <Camera />
                     <color attach="background" args={['#ffffff']} />
