@@ -38,7 +38,7 @@ export function Buttons() {
         })
 
   return (
-      <Html zIndexRange={5000000}>
+      <Html zIndexRange={[5000000]}>
         <div id="btnContainer">
             <button type="button" id="full" className="rounded-full" onClick={() => changePos()}>
               <img id="fullmap-icon" alt="Fullscreen button" src="/icon-fullscreen.png" />

@@ -13,8 +13,5 @@ let camPos = camera?.camPos
     useEffect(() => {
             camPos
       }, [camera]);
-
-
-    
     return <PerspectiveCamera position={useEffect(() => {camPos})} makeDefault name="newCam" ref={camRef} />;
   };

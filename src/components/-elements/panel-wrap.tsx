@@ -40,23 +40,14 @@ export function PanelWrapper() {
 
             i++
             if (camera?.scenes) {
-              console.log("SCENE ONCLICK")
-              console.log("G " + i)
-              
-              console.log("H " + i)
+
               next = PageInfo[i]
               camera?.setScene(next.scene)
               
               camera?.setCam(vec2.set(next.position[0], next.position[1], next.position[2]))
-              console.log(PageInfo)
-              console.log("I " + i)
             } else {
-              //camera?.setScene()
-              console.log(camera?.scenes)
               console.log("there is no scene set yet")
             }
-
-          console.log("J " + i)
         }
 
         // Upon Selection, change camera position
@@ -84,7 +75,7 @@ export function PanelWrapper() {
 
 
   return(
-    <Html zIndexRange={6000000}>
+    <Html zIndexRange={[6000000]}>
       {
         (camera?.scenes === "Aria") ?
             <Panel text={PageInfo[0]} changePage={ChangePage} /> :
