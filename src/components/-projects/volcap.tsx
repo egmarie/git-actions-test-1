@@ -21,18 +21,19 @@ export const Volcap = () => {
     const ref = useRef<Mesh<BufferGeometry>>(null);
     const camera = useContext(CamContext);
     const vec = new THREE.Vector3
+
    
     
 // Select Scene 
     function startClick(sceneName: string) {
-      camera.setMap(false)
-      camera.setScene(sceneName)
+      camera?.setMap(false)
+      camera?.setScene(sceneName)
     }
    
 // Camera and Rotation
     useFrame(state => {
       // On scene selection, change camera from React Context
-        if (camera.scenes === 'Volcap' && camera.fullmap === false ) {
+        if (camera?.scenes === 'Volcap' && camera.fullmap === false ) {
             state.camera.lookAt(ref.current.position)
             state.camera.position.lerp(vec.set(ref.current.position.x, ref.current.position.y, ref.current.position.z + 6), .01)
             camera.setCam(vec.set(ref.current.position.x, ref.current.position.y, ref.current.position.z + 5))

@@ -1,20 +1,43 @@
 // React | Three Imports
 import { useFrame, extend } from '@react-three/fiber'
 import * as THREE from 'three'
-import { Link } from 'react-router-dom'
 import { Html} from '@react-three/drei'
-extend({ Html, useFrame, THREE })
+import { useContext } from "react";
+import { Link } from 'react-router-dom'
+
+
+extend({ Html, THREE, useFrame })
+
 
 // Context
-
-// Style
-// import '../../styles/App.css'
-// import '../../styles/index.css'
+import { CamContext } from '../-main-x';
+import { PageInfo } from '../-elements/prj-data'
 
 //
 //
 export default function Intro1() {
-
+    //const [ clicked, setClicked ] = useState(false) 
+    const camera = useContext(CamContext);
+    let vec = new THREE.Vector3
+    function Begin() {
+        // console.log(camera.scenes)
+        
+        console.log(PageInfo[0])
+        camera?.setScene(PageInfo[0].scene)
+        //setClicked(true)
+        console.log(camera?.scenes)
+        camera?.setCam(vec)
+        camera?.setCam(vec.set(PageInfo[0].position[0], PageInfo[0].position[1], PageInfo[0].position[2]))
+    }
+    // useFrame(state => {
+    //     if (clicked === true) {
+    //     //   camera?.setCam(vec)
+    //     //    camera?.setCam(vec.set(PageInfo[0].position[0], PageInfo[0].position[1], PageInfo[0].position[2]))
+    //       //state.camera.position.lerp(vec.set(PageInfo[0].position[0], PageInfo[0].position[1], PageInfo[0].position[2]), .01)
+    //       //state.camera.updateProjectionMatrix()
+    //       setClicked(false)
+    //     }
+    //   })
   return (
 
         <div id="introContainer" className="">
@@ -23,7 +46,7 @@ export default function Intro1() {
                     <div className="p-2">
                         <h6>We specialize in emerging tech that solves problems and imporves customer experiments.</h6>
                     </div>
-                    <Link type="button" to="/innovate">Learn more in 3D</Link>
+                    <Link type="button" to="/innovate"><button type="button" onClick={() => Begin()}>Learn more in 3D</button></Link>
                    
             </div>
 

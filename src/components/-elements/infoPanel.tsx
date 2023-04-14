@@ -1,10 +1,11 @@
 // React | Three Imports
 import { useFrame, extend } from '@react-three/fiber'
-import { useState } from "react";
-import { useContext } from "react";
+import { useContext, useState} from "react";
 import * as THREE from 'three'
 import { Html} from '@react-three/drei'
 extend({ Html, useFrame, THREE })
+
+import PropTypes from 'prop-types'
 
 import {
   Collapse,
@@ -15,121 +16,148 @@ import {
 // Context
 import { CamContext } from '../-main-x';
 import { PageInfo } from './prj-data'
-// Style
-// import '../../styles/App.css'
-// import '../../styles/index.css'
 
 //
+let i:number = 0;
 //
 export function InfoPanel() {
 
       const camera = useContext(CamContext);
-      const [ clicked, setClicked ] = useState(false)   
       let vec = new THREE.Vector3
-      let main: { name: string; 
+      let vec2 = new THREE.Vector3
+      // let mainB: { name: string; 
+      //     link: string; 
+      //     description: string; 
+      //     scene: string;
+      //     position: number[];}[]
+      let next: { name: string; 
         link: string; 
         description: string; 
         scene: string;
         position: number[];} = PageInfo[0]
-      let nextNum: { name: string; 
-        link: string; 
-        description: string; 
-        scene: string;
-        position: number[];}
 
-        let i:number = 0;
+        
 
         // Initialization for ES Users
 
-initTE({ Collapse });
+        initTE({ Collapse });
+        //&& i < PageInfo.length
 
 // Select Full View
         function ChangePage() {
-            camera.setMap(true)
-            setClicked(true)
-          if (clicked === true) {
-            console.log("SCENE ONCLICK")
-            PageInfo.map((p) => {
+          console.log(camera?.scenes)
+
+            i++
+            if (camera?.scenes) {
+              console.log("SCENE ONCLICK")
+              console.log("G " + i)
               
-              console.log(camera.scenes)
-              console.log(i)
-              if (p.scene === camera.scenes && i++ < PageInfo.length) {
-                    console.log("correct position")
-                    nextNum = PageInfo[i++]
-                    // console.log(camera.scenes)
-                    camera.setScene(nextNum.scene)
-                    console.log(camera.scenes)
-                    main = p
-                    i++
-                
-              } else if (i >= PageInfo.length) {
-                console.log("return to the first position")
-                  i = 0
-                  camera.setScene(PageInfo[i].scene)
-                  console.log("over length " + camera.scenes)
-                  
-              } else {
-                console.log("could not find the next scene")
-              }
+              console.log("H " + i)
+              next = PageInfo[i]
+              // console.log("NEXT  " + next.scene)
+              camera?.setScene(next.scene)
               
-            })
-            setClicked(false) 
-            console.log(typeof nextNum)
-            console.log(nextNum.scene)
-          } else {
-            console.log("there is no scene set yet")
-          }
+              camera?.setCam(vec2.set(next.position[0], next.position[1], next.position[2]))
+              // console.log(camera.scenes)
+              console.log("I " + i)
+            } else {
+              //camera?.setScene()
+              console.log(camera?.scenes)
+              console.log("there is no scene set yet")
+            }
+
+          console.log("J " + i)
         }
 
 // Upon Selection, change camera position
         useFrame(state => {
-          if ( camera.fullmap === false && clicked === true ) {
-            state.camera.lookAt(vec.set(nextNum.position[0], nextNum.position[1], nextNum.position[2]))
-            state.camera.position.lerp(vec.set(nextNum.position[0], nextNum.position[1], nextNum.position[2] + 5), .01)
-            camera.setCam(vec.set( nextNum.position[0], nextNum.position[1], nextNum.position[2] + 5 ))
+          if ( camera?.fullmap === false ) {
+            state.camera.lookAt(vec.set(next.position[0], next.position[1], next.position[2]))
+            state.camera.position.lerp(vec.set(next.position[0], next.position[1], next.position[2] + 5), .01)
+            camera.setCam(vec.set( next.position[0], next.position[1], next.position[2] + 5 ))
             state.camera.updateProjectionMatrix()
           }
 
         })
         console.log(PageInfo)
 
-  return (
-      <Html zIndexRange={6000000}>
 
-  <div id="panelContainer">
-  <div id="panel"
-    className="rounded-t-lg border border-neutral-200">
-      <button
-        className="flex group relative w-full items-center rounded-t-[15px] border-0 px-5 py-4 text-left text-base transition [overflow-anchor:none] hover:z-[2] focus:z-[3] bg-transparent"
-        type="button"
-        data-te-collapse-init
-        data-te-target="#collapseGroup"
-        aria-expanded="false"
-        aria-controls="collapseGroup">
-        <h5 id="heading">{main.name}</h5>
-        <img id="more" alt="Expand and Read more" src="/arrow-forward.png" />
-      </button>
-    <div
-      id="collapseGroup"
-      className="!visible"
-      data-te-collapse-item
-      data-te-collapse-show
-      aria-labelledby="heading"
-      data-te-parent="#panelContainer">
-      <div className="px-5 py-4">
-            <p>{main.description}</p>
-            <a type="button" href="#" id="learnMore" className="rounded-full p-3 m-2">
-                  <p>learn more</p>
-              </a>
-            <a type="button" href="#" id="next" className="rounded-full p-3 m-2" onClick={() => ChangePage()}>
-                  <p>next</p>
+  return(
+    <Html zIndexRange={6000000}>
+      {
+        (camera?.scenes === "Aria") ?
+            <Panel text={PageInfo[0]} changePage={ChangePage} /> :
+        (camera?.scenes === "Volcap") ?
+            <Panel text={PageInfo[1]} changePage={ChangePage} /> :
+        (camera?.scenes === "VR") ?
+            <Panel text={PageInfo[2]} changePage={ChangePage} /> :
+        null
+        }
+      </Html>
+  )
+
+
+
+}
+interface PanelProps {
+  text: { name: string; 
+    link: string; 
+    description: string; 
+    scene: string;
+    position: number[];};
+  changePage: () => any;
+}
+
+function Panel({text, changePage}: PanelProps) { 
+  let ChangePage = changePage
+  const main = text
+  const [active, setActive] = useState(true)
+  function Collapse() {
+      setActive(!active)
+  }
+  return (
+
+<div id="panelContainer">
+<div id="panel"
+  className="rounded-t-lg">
+    <h5 id="heading">
+    <button
+      className="bg-transparent border-none active flex justify-between"
+      type="button"
+      aria-expanded="true"
+      aria-controls="collapseGroup"
+      onClick={() => Collapse()}>
+      {main.name}
+      <img id="more" alt="Expand and Read more" src="/arrow-forward.png" />
+    </button>
+    </h5>
+  <div
+    id="collapseGroup"
+    className=""
+    aria-labelledby="heading">
+      <div className="px-4 py-3">
+            <p className={`${active ? "active" : "inactive" }`}>{main.description}</p>
+
+            <a type="button" href={main.link} id="learnMore" className="rounded-full p-3 m-2">
+                  <p className="m-0">learn more</p>
+            </a>
+            <a type="button" href="#" id="next" className="rounded-full p-3 m-2" onClick={() => ChangePage()}> 
+                  <p className="m-0">next</p>
             </a>
       </div>
-    </div>
   </div>
+</div>
 
 </div>
-          
-      </Html>
 )
+}
+
+Panel.propTypes = {  
+  text: PropTypes.shape({
+    name: PropTypes.string, 
+      link: PropTypes.string,  
+      description: PropTypes.string, 
+      scene: PropTypes.string, 
+      position: PropTypes.arrayOf(PropTypes.number)
+  }),
 }

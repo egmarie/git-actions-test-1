@@ -9,7 +9,7 @@ export function Camera() {
     const camera = useContext(CamContext);
     const camRef = useRef();
 
-let camPos = camera.camPos
+let camPos = camera?.camPos
     useEffect(() => {
             camPos
       }, [camera]);

@@ -24,13 +24,13 @@ export function Buttons() {
 
 // Select Full View
         function changePos() {
-          camera.setMap(true)
+          camera?.setMap(true)
           setClicked(true)
         }
 
 // Upon Selection, change camera position
         useFrame(state => {
-          if (camera.fullmap === true && clicked === true) {
+          if (camera?.fullmap === true && clicked === true) {
             camera.setCam(vec)
             state.camera.position.lerp(vec.set(0, 0, 15), .01)
             state.camera.updateProjectionMatrix()

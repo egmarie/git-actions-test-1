@@ -24,15 +24,15 @@ export const VR = () => {
 
 // Select Scene
       function startClick(sceneName: string) {
-          camera.setMap(false)
-          camera.setScene(sceneName)
+          camera?.setMap(false)
+          camera?.setScene(sceneName)
       }
 
 
     useFrame(state => {
 
         // On scene selection, change camera from React Context
-            if (camera.scenes === 'VR' && camera.fullmap === false) {
+            if (camera?.scenes === 'VR' && camera.fullmap === false) {
                 state.camera.lookAt(ref.current.position)
                 state.camera.position.lerp(vec.set(ref.current.position.x, ref.current.position.y, ref.current.position.z + 5), .01)
                 camera.setCam(vec.set(ref.current.position.x, ref.current.position.y, ref.current.position.z + 5))

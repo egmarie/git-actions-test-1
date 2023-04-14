@@ -12,8 +12,6 @@ import { Aria, Volcap, VR } from './-projects/index'
 import { InfoPanel, Buttons, Camera } from './-elements/index'
 import Intro1 from './-projects/intro'
 
-
-
 // Create Context
 export const CamContext = createContext<CamContextType | null>(null);
 
@@ -29,10 +27,11 @@ export const AppFiber: React.FunctionComponent = () => {
   return (
     <>
 <div id="Wide" className="d-flex flex-row">
-        { window.location.pathname === '/' ? <Intro1 /> : ''}
+        
         <CamContext.Provider value={{camPos, setCam, fullmap, setMap, scenes, setScene}}>
-              
+        { window.location.pathname === '/' ? <Intro1 /> : ''}
               <Canvas shadows>
+
                     
                     { window.location.pathname === '/innovate' ? <InfoPanel /> : ''}
                     <Buttons />

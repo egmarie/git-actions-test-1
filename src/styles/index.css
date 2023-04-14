@@ -65,6 +65,15 @@ button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
+p.active {
+  display: flex;
+}
+p.inactive {
+  display: none;
+}
+#header.button {
+  width: 100%;
+}
 
 @media (prefers-color-scheme: light) {
   :root {
