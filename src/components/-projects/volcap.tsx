@@ -51,7 +51,7 @@ export const Volcap = () => {
 
   return (
     <mesh name='Volcap' position={[8, -2, -29]} ref={ref} onClick={() => startClick('Volcap') }>
-      <boxGeometry args={[ 1, 1, 1]} userData={{ name: "volcap" }} />
+      <boxGeometry args={[ 0.001, 0.001, 0.001]} userData={{ name: "volcap" }} />
       <shaderMaterial
         uniforms={uniforms}
         fragmentShader={fragmentShader}

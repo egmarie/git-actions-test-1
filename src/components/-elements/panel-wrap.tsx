@@ -48,6 +48,7 @@ export function PanelWrapper() {
               console.log("there is no scene set yet")
             }
         }
+        const panelCont = document.getElementById("panelContainer")
 
         // Upon Selection, change camera position
         useFrame(state => {
@@ -63,11 +64,15 @@ export function PanelWrapper() {
             camera.setCam(vec.set( PageInfo[1].position[0], PageInfo[1].position[1], PageInfo[1].position[2] + 5))
             state.camera.updateProjectionMatrix()
           } else if ( camera?.scenes === "Volcap" ) {
+            panelCont.style.top = "100px"
+            panelCont.style.left = "700px"
             state.camera.lookAt(vec.set(PageInfo[2].position[0], PageInfo[2].position[1], PageInfo[2].position[2]))
             state.camera.position.lerp(vec.set(PageInfo[2].position[0], PageInfo[2].position[1], PageInfo[2].position[2] + 5), .02)
             camera.setCam(vec.set( PageInfo[2].position[0], PageInfo[2].position[1], PageInfo[2].position[2] + 5))
             state.camera.updateProjectionMatrix()
           } else if ( camera?.scenes === "VR" ) {
+            panelCont.style.top = "100px"
+            panelCont.style.left = "50px"
             state.camera.lookAt(vec.set(PageInfo[3].position[0], PageInfo[3].position[1], PageInfo[3].position[2]))
             state.camera.position.lerp(vec.set(PageInfo[3].position[0], PageInfo[3].position[1], PageInfo[3].position[2] + 5), .02)
             camera.setCam(vec.set( PageInfo[3].position[0], PageInfo[3].position[1], PageInfo[3].position[2] + 5))

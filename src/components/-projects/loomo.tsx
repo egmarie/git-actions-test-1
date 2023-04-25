@@ -41,7 +41,7 @@ export const Loomo = () => {
     })
 
 
-
+             
 // GLSL Uniforms Declaration
       let uniforms: any = {
         colorA: {type: 'vec3', value: new THREE.Color(0x74ebd5)},
@@ -51,7 +51,7 @@ export const Loomo = () => {
 
   return (
     <mesh position={[-11, -5, -22]} ref={ref} onClick={ () => startClick('Aria') } >
-      <boxGeometry args={[1, 1, 1]} userData={{ name: "Loomo" }} />
+      <boxGeometry args={[0.001, 0.001, 0.001]} userData={{ name: "Loomo" }} />
       <shaderMaterial
         uniforms={uniforms}
         fragmentShader={fragmentShader}

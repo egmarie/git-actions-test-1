@@ -48,11 +48,9 @@ export const Aria = () => {
         colorA: {type: 'vec3', value: new THREE.Color(0x74ebd5)},
         colorB: {type: 'vec3', value: new THREE.Color(0xACB6E5)}
       }
-
-
   return (
     <mesh position={[-32, -6, -23]} ref={ref} onClick={ () => startClick('Aria') } >
-      <boxGeometry args={[1, 1, 1]} userData={{ name: "aria" }} />
+      <boxGeometry args={[0.001, 0.001, 0.001]} userData={{ name: "aria" }} />
       <shaderMaterial
         uniforms={uniforms}
         fragmentShader={fragmentShader}

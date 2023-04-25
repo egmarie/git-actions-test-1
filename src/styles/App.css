@@ -21,7 +21,8 @@ body {
 }
 
 #Wide {
-  width: 90%;
+  width: 100%;
+  height: 100%;
   max-width: 1800px;
   height: 80vh;
   justify-content: center;
@@ -50,16 +51,40 @@ body {
 }
 
 #btnContainer {
+  /* position: relative; */
+  transform: none;
   position: absolute;
-  z-index: 50;
+  width: 100%;
+  height:auto;
+  top: 0px;
+  left: 0px;
 }
+#full {
+  /* position: absolute; */
+  /* top: 2px;
+  right: 3px; */
+  /* transform: none; */
+  position: 'absolute';
+  width: 4rem;
+  height: 4rem;
+  border: none;
+  padding: .5rem;
+  margin: .5rem;
+  background-color:rgba(255,255,255,0.8);
+}
+#fullmap-icon {
+  width: 2em;
+  height: auto;
+}
+
 #panelContainer {
+  transform: none;
   position: absolute;
-  z-index: 15;
   top: 75px;
   left: 5px;
 }
 #panel {
+  transform: none;
   width: 20em;
   height: auto;
   background-color:rgba(160, 214, 255, 0.7);
@@ -69,25 +94,6 @@ body {
 }
 #btnCollapse2: hover {
   border: none;
-}
-
-
-#full {
-  position: absolute;
-  top: 2px;
-  left: 3px;
-
-  width: 4rem;
-  height: 4rem;
-  border: none;
-  padding: .5rem;
-  margin: .5rem;
-  background-color:rgba(255,255,255,0.8);
-  transform: none;
-}
-#fullmap-icon {
-  width: 2em;
-  height: auto;
 }
 
 #more {

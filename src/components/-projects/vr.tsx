@@ -52,7 +52,7 @@ export const VR = () => {
   return (
 
     <mesh position={[-2, -5, 6]} ref={ref} onClick={() => startClick('VR') } >
-      <boxGeometry args={[1,1,1]} userData={{ name: "vr" }} />
+      <boxGeometry args={[0.001, 0.001, 0.001]} userData={{ name: "vr" }} />
       <shaderMaterial
         uniforms={uniforms}
         fragmentShader={fragmentShader}

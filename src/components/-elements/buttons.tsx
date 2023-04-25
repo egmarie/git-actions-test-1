@@ -35,14 +35,20 @@ export function Buttons() {
             state.camera.updateProjectionMatrix()
           }
         })
+        const fullCont = document.getElementById("full")
+        if (fullCont) {
+          fullCont.style.top = "100px"
+          fullCont.style.left = "400px"
+        }
+
 
   return (
-      <Html zIndexRange={[5000000]}>
-        <div id="btnContainer">
+      <Html zIndexRange={[9000000]}>
+        {/* <div id="btnContainer"> */}
             <button type="button" id="full" className="rounded-full" onClick={() => changePos()}>
               <img id="fullmap-icon" alt="Fullscreen button" src="/icon-fullscreen.png" />
             </button>
-          </div>
+          {/* </div> */}
       </Html>
 )
 }
