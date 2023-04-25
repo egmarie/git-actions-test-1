@@ -9,9 +9,6 @@ extend({ Html, useFrame, THREE })
 // Context
 import { CamContext } from '../-main-x';
 
-// Style
-// import '../../styles/App.css'
-// import '../../styles/index.css'
 
 //
 //
@@ -32,7 +29,9 @@ export function Buttons() {
         useFrame(state => {
           if (camera?.fullmap === true && clicked === true) {
             camera.setCam(vec)
-            state.camera.position.lerp(vec.set(0, 0, 15), .01)
+
+            state.camera.position.lerp(vec.set(4, 2, 30), .05)
+            camera.setCam(vec.set(4, 2, 30))
             state.camera.updateProjectionMatrix()
           }
         })

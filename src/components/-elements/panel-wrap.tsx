@@ -2,7 +2,7 @@
 import { useFrame, extend } from '@react-three/fiber'
 import { useContext } from "react";
 import * as THREE from 'three'
-import { Html} from '@react-three/drei'
+import { Html } from '@react-three/drei'
 extend({ Html, useFrame, THREE })
 
 
@@ -43,7 +43,6 @@ export function PanelWrapper() {
 
               next = PageInfo[i]
               camera?.setScene(next.scene)
-              
               camera?.setCam(vec2.set(next.position[0], next.position[1], next.position[2]))
             } else {
               console.log("there is no scene set yet")
@@ -58,17 +57,23 @@ export function PanelWrapper() {
             state.camera.position.lerp(vec.set(PageInfo[0].position[0], PageInfo[0].position[1], PageInfo[0].position[2] + 5), .01)
             camera.setCam(vec.set( PageInfo[0].position[0], PageInfo[0].position[1], PageInfo[0].position[2] + 5 ))
             state.camera.updateProjectionMatrix()
-          } else if ( camera?.scenes === "Volcap" ) {
+          } else if ( camera?.scenes === "Loomo" ) {
             state.camera.lookAt(vec.set(PageInfo[1].position[0], PageInfo[1].position[1], PageInfo[1].position[2]))
-            state.camera.position.lerp(vec.set(PageInfo[1].position[0], PageInfo[1].position[1], PageInfo[1].position[2] + 5), .01)
-            camera.setCam(vec.set( PageInfo[1].position[0], PageInfo[1].position[1], PageInfo[1].position[2] + 5 ))
+            state.camera.position.lerp(vec.set(PageInfo[1].position[0], PageInfo[1].position[1], PageInfo[1].position[2] + 5), .02)
+            camera.setCam(vec.set( PageInfo[1].position[0], PageInfo[1].position[1], PageInfo[1].position[2] + 5))
+            state.camera.updateProjectionMatrix()
+          } else if ( camera?.scenes === "Volcap" ) {
+            state.camera.lookAt(vec.set(PageInfo[2].position[0], PageInfo[2].position[1], PageInfo[2].position[2]))
+            state.camera.position.lerp(vec.set(PageInfo[2].position[0], PageInfo[2].position[1], PageInfo[2].position[2] + 5), .02)
+            camera.setCam(vec.set( PageInfo[2].position[0], PageInfo[2].position[1], PageInfo[2].position[2] + 5))
             state.camera.updateProjectionMatrix()
           } else if ( camera?.scenes === "VR" ) {
-            state.camera.lookAt(vec.set(PageInfo[2].position[0], PageInfo[2].position[1], PageInfo[2].position[2]))
-            state.camera.position.lerp(vec.set(PageInfo[2].position[0], PageInfo[2].position[1], PageInfo[2].position[2] + 5), .01)
-            camera.setCam(vec.set( PageInfo[2].position[0], PageInfo[2].position[1], PageInfo[2].position[2] + 5 ))
+            state.camera.lookAt(vec.set(PageInfo[3].position[0], PageInfo[3].position[1], PageInfo[3].position[2]))
+            state.camera.position.lerp(vec.set(PageInfo[3].position[0], PageInfo[3].position[1], PageInfo[3].position[2] + 5), .02)
+            camera.setCam(vec.set( PageInfo[3].position[0], PageInfo[3].position[1], PageInfo[3].position[2] + 5))
             state.camera.updateProjectionMatrix()
           }
+          null
         }
         // }
         )
@@ -80,9 +85,11 @@ export function PanelWrapper() {
         (camera?.scenes === "Aria") ?
             <Panel text={PageInfo[0]} changePage={ChangePage} /> :
         (camera?.scenes === "Volcap") ?
-            <Panel text={PageInfo[1]} changePage={ChangePage} /> :
-        (camera?.scenes === "VR") ?
             <Panel text={PageInfo[2]} changePage={ChangePage} /> :
+        (camera?.scenes === "VR") ?
+            <Panel text={PageInfo[3]} changePage={ChangePage} /> :
+        (camera?.scenes === "Loomo") ?
+            <Panel text={PageInfo[1]} changePage={ChangePage} /> :
         null
         }
       </Html>

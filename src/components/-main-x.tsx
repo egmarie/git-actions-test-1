@@ -8,7 +8,7 @@ extend({ Canvas, Html, useFrame, THREE, PerspectiveCamera, useThree, Flex, Box }
 
 // Scene Imports
 import { CamContextType } from './config/@types.context';
-import { Aria, Volcap, VR } from './-projects/index'
+import { Aria, Volcap, VR, Loomo } from './-projects/index'
 import { PanelWrapper, Buttons, Camera } from './-elements/index'
 import LabModel from './models/lab-model'
 import Intro1 from './-projects/intro'
@@ -21,7 +21,7 @@ export const CamContext = createContext<CamContextType | null>(null);
 export const AppFiber: React.FunctionComponent = () => {
 
 
-  const [ camPos, setCam ] = useState(new THREE.Vector3(0, 0, 40));
+  const [ camPos, setCam ] = useState(new THREE.Vector3(0, 4, 60));
   const [ fullmap, setMap ] = useState(true);
   const [ scenes, setScene ] = useState('');
 
@@ -49,6 +49,7 @@ export const AppFiber: React.FunctionComponent = () => {
                     <Aria />
                     <Volcap />
                     <VR />
+                    <Loomo />
 
                 </Canvas>
 

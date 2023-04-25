@@ -15,7 +15,7 @@ import { CamContext } from '../-main-x';
 
 //
 //
-export const Aria = () => {
+export const Loomo = () => {
   const ref = useRef<Mesh<BufferGeometry>>(null);
   const camera = useContext(CamContext); 
   const vec = new THREE.Vector3
@@ -37,7 +37,6 @@ export const Aria = () => {
           camera.setCam(vec.set(ref.current.position.x, ref.current.position.y, ref.current.position.z + 5))
           state.camera.updateProjectionMatrix()
         }
-
         return null
     })
 
@@ -51,8 +50,8 @@ export const Aria = () => {
 
 
   return (
-    <mesh position={[-32, -6, -23]} ref={ref} onClick={ () => startClick('Aria') } >
-      <boxGeometry args={[1, 1, 1]} userData={{ name: "aria" }} />
+    <mesh position={[-11, -5, -22]} ref={ref} onClick={ () => startClick('Aria') } >
+      <boxGeometry args={[1, 1, 1]} userData={{ name: "Loomo" }} />
       <shaderMaterial
         uniforms={uniforms}
         fragmentShader={fragmentShader}

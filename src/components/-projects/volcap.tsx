@@ -35,14 +35,10 @@ export const Volcap = () => {
       // On scene selection, change camera from React Context
         if (camera?.scenes === 'Volcap' && camera.fullmap === false ) {
             state.camera.lookAt(ref.current.position)
-            state.camera.position.lerp(vec.set(ref.current.position.x, ref.current.position.y, ref.current.position.z + 6), .01)
-            camera.setCam(vec.set(ref.current.position.x, ref.current.position.y, ref.current.position.z + 5))
+            state.camera.position.lerp(vec.set(ref.current.position.x, ref.current.position.y, ref.current.position.z), .01)
+            camera.setCam(vec.set(ref.current.position.x, ref.current.position.y, ref.current.position.z))
             state.camera.updateProjectionMatrix()
         }
-      // Square Rotation
-        const a = state.clock.getElapsedTime();     
-        ref.current.rotation.x = a * 1.2;
-        ref.current.rotation.y = a * 1.9;
         return null
       })
 
@@ -54,8 +50,8 @@ export const Volcap = () => {
 
 
   return (
-    <mesh name='Volcap' position={[-1, -1, -6]} ref={ref} onClick={() => startClick('Volcap') }>
-      <boxGeometry args={[1, 1, 1]} userData={{ name: "volcap" }} />
+    <mesh name='Volcap' position={[8, -2, -29]} ref={ref} onClick={() => startClick('Volcap') }>
+      <boxGeometry args={[ 1, 1, 1]} userData={{ name: "volcap" }} />
       <shaderMaterial
         uniforms={uniforms}
         fragmentShader={fragmentShader}

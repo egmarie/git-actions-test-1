@@ -38,10 +38,7 @@ export const VR = () => {
                 camera.setCam(vec.set(ref.current.position.x, ref.current.position.y, ref.current.position.z + 5))
                 state.camera.updateProjectionMatrix()  
             }
-        // Square Rotation
-            const a = state.clock.getElapsedTime();     
-            ref.current.rotation.x = a * 1.2;
-            ref.current.rotation.y = a * 1.5;
+
         return null
       })
 
@@ -54,8 +51,8 @@ export const VR = () => {
 
   return (
 
-    <mesh position={[-6.5, -2.7, -12]} ref={ref} onClick={() => startClick('VR') } >
-      <boxGeometry args={[1, 1, 1]} userData={{ name: "vr" }} />
+    <mesh position={[-2, -5, 6]} ref={ref} onClick={() => startClick('VR') } >
+      <boxGeometry args={[1,1,1]} userData={{ name: "vr" }} />
       <shaderMaterial
         uniforms={uniforms}
         fragmentShader={fragmentShader}

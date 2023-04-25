@@ -22,7 +22,7 @@ export default function LabModel() {
 
     return (
       <Suspense fallback={null}>
-          <primitive scale={1.2} rotation={[0, 160, 0]} position={[3, -4, -6]} object={gltf.scene} />
+          <primitive scale={1.2} rotation={[0, 180, 0]} position={[-14, -8, -14]} object={gltf.scene} />
           <OrbitControls enableRotate={true} enableZoom={true} />
       </Suspense>
       
