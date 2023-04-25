@@ -29,17 +29,20 @@ export function Panel({text, changePage }: PanelProps) {
 <div id="panelContainer">
     <div id="panel"
     className="rounded-t-lg">
-        <h5 id="heading" className="d-flex m-0">
+      <h5 id="heading" className="d-flex m-0">
+    
         <button
-        className="bg-transparent border-none active d-flex justify-between"
+        id="btnCollapse2"
+        className="d-flex bg-transparent border-none active justify-content-between align-items-center"
         type="button"
         aria-expanded="true"
         aria-controls="collapseGroup"
         onClick={() => Collapse()}>
-        {main.name}
-        <img id="more" alt="Expand and Read more" src="/arrow-forward.png" />
+            <p className="m-0 px-2">{main.name}</p>
+            <img id="more" alt="Expand and Read more" src="/arrow-forward.png" />
         </button>
         </h5>
+
     <div
         id="collapseGroup"
         className="px-4"

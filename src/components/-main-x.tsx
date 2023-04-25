@@ -10,6 +10,7 @@ extend({ Canvas, Html, useFrame, THREE, PerspectiveCamera, useThree, Flex, Box }
 import { CamContextType } from './config/@types.context';
 import { Aria, Volcap, VR } from './-projects/index'
 import { PanelWrapper, Buttons, Camera } from './-elements/index'
+import LabModel from './models/lab-model'
 import Intro1 from './-projects/intro'
 
 // Create Context
@@ -42,7 +43,7 @@ export const AppFiber: React.FunctionComponent = () => {
                     <ambientLight intensity={0.9} color={0xffffff} />
                     <directionalLight color={0xFCFC4D} position={[0, 2, 5]} />
 
-                    {/* <LabModel /> */}
+                    <LabModel />
                     {/* <ToonLabModel /> */}
                     
                     <Aria />

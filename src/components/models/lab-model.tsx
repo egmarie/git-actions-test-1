@@ -12,7 +12,7 @@ extend({ OrbitControls, useLoader, GLTFLoader, DRACOLoader })
 export default function LabModel() {
   const gltf = useLoader(
     GLTFLoader,
-    "/lab-draco-1.glb",
+    "/lab-model-4-10-23.glb",
     loader => {
       const dracoLoader = new DRACOLoader();
       dracoLoader.setDecoderPath("../../node_modules/three/examples/jsm/libs/draco/");
