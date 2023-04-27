@@ -17,91 +17,103 @@ let i:number = 0;
 
 export function PanelWrapper() {
 
+// Definitions
       const camera = useContext(CamContext);
       let vec = new THREE.Vector3
       let vec2 = new THREE.Vector3
-      // let mainB: { name: string; 
-      //     link: string; 
-      //     description: string; 
-      //     scene: string;
-      //     position: number[];}[]
+
+      let page2: { name: string; 
+        link: string; 
+        description: string; 
+        scene: string;
+        panelPos: number[];
+        position: number[];}[];
+      let page: { name: string; 
+        link: string; 
+        description: string; 
+        scene: string;
+        panelPos: number[];
+        position: number[];} = PageInfo[0]
       let next: { name: string; 
         link: string; 
         description: string; 
         scene: string;
+        panelPos: number[];
         position: number[];} = PageInfo[0]
 
+      const panelCont = document.getElementById("panelContainer")
+        
 
-        //&& i < PageInfo.length
 
-// Select Full View
-        function ChangePage() {
+// Next Topic
+        function Next() {
           console.log(camera?.scenes)
 
             i++
-            if (camera?.scenes) {
+            if (camera?.scenes && i < 4) {
 
               next = PageInfo[i]
+              console.log(i + " IIIII")
               camera?.setScene(next.scene)
               camera?.setCam(vec2.set(next.position[0], next.position[1], next.position[2]))
+
             } else {
               console.log("there is no scene set yet")
             }
+            console.log(camera?.scenes)
         }
-        const panelCont = document.getElementById("panelContainer")
+// Previous Topic
+        function Back() {
+          console.log(camera?.scenes)
 
-        // Upon Selection, change camera position
+            i--
+            if (camera?.scenes && i < 4) {
+
+              next = PageInfo[i]
+              console.log(i + " IIIII")
+              camera?.setScene(next.scene)
+              camera?.setCam(vec2.set(next.position[0], next.position[1], next.position[2]))
+
+            } else {
+              console.log("there is no scene set yet")
+            }
+            console.log(camera?.scenes)
+        }
+// Upon Selection, change camera position
         useFrame(state => {
-          // if ( camera?.fullmap === false ) {
-            if ( camera?.scenes === "Aria" ) {
-            state.camera.lookAt(vec.set(PageInfo[0].position[0], PageInfo[0].position[1], PageInfo[0].position[2]))
-            state.camera.position.lerp(vec.set(PageInfo[0].position[0], PageInfo[0].position[1], PageInfo[0].position[2] + 5), .01)
-            camera.setCam(vec.set( PageInfo[0].position[0], PageInfo[0].position[1], PageInfo[0].position[2] + 5 ))
+            page2 = PageInfo.filter((item) => item.scene === camera?.scenes)
+            page = page2[0]
+            if (page.scene === "Volcap") {
+              state.camera.lookAt(vec.set(page.position[0], page.position[1] + 0.5, page.position[2]))
+            } else {
+              state.camera.lookAt(vec.set(page.position[0], page.position[1] - 1, page.position[2]))
+            }
+
+            state.camera.position.lerp(vec.set(page.position[0], page.position[1], page.position[2] + 5), .01)
+            camera?.setCam(vec.set( page.position[0], page.position[1], page.position[2] + 5 ))
+            panelCont.style.top = page.panelPos[0] + "px"
+            panelCont.style.left = page.panelPos[1] + "px"
             state.camera.updateProjectionMatrix()
-          } else if ( camera?.scenes === "Loomo" ) {
-            state.camera.lookAt(vec.set(PageInfo[1].position[0], PageInfo[1].position[1], PageInfo[1].position[2]))
-            state.camera.position.lerp(vec.set(PageInfo[1].position[0], PageInfo[1].position[1], PageInfo[1].position[2] + 5), .02)
-            camera.setCam(vec.set( PageInfo[1].position[0], PageInfo[1].position[1], PageInfo[1].position[2] + 5))
-            state.camera.updateProjectionMatrix()
-          } else if ( camera?.scenes === "Volcap" ) {
-            panelCont.style.top = "100px"
-            panelCont.style.left = "700px"
-            state.camera.lookAt(vec.set(PageInfo[2].position[0], PageInfo[2].position[1], PageInfo[2].position[2]))
-            state.camera.position.lerp(vec.set(PageInfo[2].position[0], PageInfo[2].position[1], PageInfo[2].position[2] + 5), .02)
-            camera.setCam(vec.set( PageInfo[2].position[0], PageInfo[2].position[1], PageInfo[2].position[2] + 5))
-            state.camera.updateProjectionMatrix()
-          } else if ( camera?.scenes === "VR" ) {
-            panelCont.style.top = "100px"
-            panelCont.style.left = "50px"
-            state.camera.lookAt(vec.set(PageInfo[3].position[0], PageInfo[3].position[1], PageInfo[3].position[2]))
-            state.camera.position.lerp(vec.set(PageInfo[3].position[0], PageInfo[3].position[1], PageInfo[3].position[2] + 5), .02)
-            camera.setCam(vec.set( PageInfo[3].position[0], PageInfo[3].position[1], PageInfo[3].position[2] + 5))
-            state.camera.updateProjectionMatrix()
-          }
           null
         }
-        // }
         )
 
 
   return(
     <Html zIndexRange={[6000000]}>
       {
-        (camera?.scenes === "Aria") ?
-            <Panel text={PageInfo[0]} changePage={ChangePage} /> :
-        (camera?.scenes === "Volcap") ?
-            <Panel text={PageInfo[2]} changePage={ChangePage} /> :
-        (camera?.scenes === "VR") ?
-            <Panel text={PageInfo[3]} changePage={ChangePage} /> :
-        (camera?.scenes === "Loomo") ?
-            <Panel text={PageInfo[1]} changePage={ChangePage} /> :
-        null
+        (camera?.scenes === PageInfo[0].scene) ?
+            <Panel text={PageInfo[0]} next={Next} back={Back}  /> :
+        (camera?.scenes === PageInfo[1].scene) ?
+            <Panel text={PageInfo[1]} next={Next} back={Back}  /> :
+        (camera?.scenes === PageInfo[2].scene) ?
+            <Panel text={PageInfo[2]} next={Next} back={Back}  /> :
+        (camera?.scenes === PageInfo[3].scene) ?
+            <Panel text={PageInfo[3]} next={Next} back={Back}  /> :
+         null
         }
       </Html>
   )
-
-
-
 }
 
 

@@ -35,7 +35,7 @@ export const AppFiber: React.FunctionComponent = () => {
 
                     
                     { window.location.pathname === '/innovate' ? <PanelWrapper /> : ''}
-                    <Buttons />
+                    {/* <Buttons /> */}
                     <Camera />
                     <color attach="background" args={['#ffffff']} />
 

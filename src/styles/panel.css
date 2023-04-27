@@ -1,0 +1,49 @@
+#panelContainer {
+    transform: none;
+    position: absolute;
+    top: 75px;
+    left: 5px;
+  }
+    #panelContainer h5 {
+        font-size: 1.5em;
+        font-weight: 800;
+        color: #1B4767;
+    }
+    #panelContainer p {
+        font-size: 1.1em;
+        font-weight: 500;
+    }
+    #panelContainer a p {
+        font-size: 1em;
+        font-weight: 700;
+        color: #1B4767;
+    }
+  #panelContainer h5, #panelContainer p {
+    color: #fff;
+  }
+  #panel {
+    transform: none;
+    width: 20em;
+    height: auto;
+    background-color:rgba(121, 173, 211, 0.96);
+  }
+  #btnCollapse2 {
+    width: 100%;
+  }
+  #btnCollapse2: hover {
+    border: none;
+  }
+  
+  #more {
+    width: 1em;
+    height: auto;
+    transform: rotate(90deg);
+  }
+  #backimg {
+    width: 1em;
+    height: auto;
+    transform: rotate(180deg);
+  }
+  .pnl-btns {
+    border: #1B4767 3px solid;
+  }

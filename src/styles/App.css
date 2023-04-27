@@ -77,26 +77,4 @@ body {
   height: auto;
 }
 
-#panelContainer {
-  transform: none;
-  position: absolute;
-  top: 75px;
-  left: 5px;
-}
-#panel {
-  transform: none;
-  width: 20em;
-  height: auto;
-  background-color:rgba(160, 214, 255, 0.7);
-}
-#btnCollapse2 {
-  width: 100%;
-}
-#btnCollapse2: hover {
-  border: none;
-}
 
-#more {
-  width: 1em;
-  height: auto;
-}
