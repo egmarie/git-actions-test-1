@@ -9,7 +9,6 @@ extend({ Html, useFrame, THREE })
 // Context
 import { CamContext } from '../-main-x';
 
-
 //
 //
 export function Buttons() {
@@ -21,7 +20,6 @@ export function Buttons() {
         function changePos() {
           camera?.setMap(!camera.fullmap)
           setClicked(true)
-
         }
 
 // Upon Selection, change camera position

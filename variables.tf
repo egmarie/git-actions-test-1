@@ -6,7 +6,7 @@ variable "region" {
 }
 
 variable "project_name" {
-  default     = "us-east-1"
+  default     = "ar-portfolio"
   description = "ar-portfolio"
   type        = string
 }

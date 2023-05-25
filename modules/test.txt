@@ -1,0 +1,173 @@
+# resource "aws_cloudfront_origin_access_identity" "oai" {
+#   comment = "ar-portfolio-app OAI"
+resource "aws_cloudfront_origin_access_control" "oac" {
+  name                              = "3d_Portfolio_Policy"
+  description                       = "Portfolio Policy"
+  origin_access_control_origin_type = "s3"
+  signing_behavior                  = "always"
+  signing_protocol                  = "sigv4"
+}
+
+resource "aws_cloudfront_distribution" "cf_distribution" {
+  origin {
+    domain_name = aws_s3_bucket.static_ar_bucket-1.bucket_domain_name
+    origin_id   = local.s3_origin_id
+    origin_access_control_id = aws_cloudfront_origin_access_control.oac.id
+  }
+
+  enabled = true
+
+  # may be an issue with security customizations
+  is_ipv6_enabled = true
+
+  default_root_object = "index.html"
+
+  default_cache_behavior {
+    allowed_methods  = ["GET", "HEAD", "OPTIONS"]
+    cached_methods   = ["GET", "HEAD"]
+    target_origin_id = local.s3_origin_id
+
+    forwarded_values {
+      query_string = false
+
+      cookies {
+        forward = "none"
+      }
+    }
+
+    viewer_protocol_policy = "redirect-to-https"
+    min_ttl                = 0
+    default_ttl            = 3600
+    max_ttl                = 86400
+    compress               = true
+  }
+
+  ordered_cache_behavior {
+    path_pattern     = "/index.html"
+    allowed_methods  = ["GET", "HEAD", "OPTIONS"]
+    cached_methods   = ["GET", "HEAD", "OPTIONS"]
+    target_origin_id = local.s3_origin_id
+
+    forwarded_values {
+      query_string = false
+
+      cookies {
+        forward = "none"
+      }
+    }
+
+    min_ttl                = 0
+    default_ttl            = 0
+    max_ttl                = 0
+    compress               = true
+    viewer_protocol_policy = "redirect-to-https"
+  }
+
+  # price_class = "PriceClass_100"
+
+  viewer_certificate {
+    cloudfront_default_certificate = true
+  }
+
+  retain_on_delete = true
+
+  custom_error_response {
+    error_caching_min_ttl = 300
+    error_code            = 403
+    response_code         = 200
+    response_page_path    = "/index.html"
+  }
+
+  custom_error_response {
+    error_caching_min_ttl = 300
+    error_code            = 404
+    response_code         = 200
+    response_page_path    = "/index.html"
+  }
+
+  restrictions {
+    geo_restriction {
+      restriction_type = "none"
+    }
+  }
+}
+
+
+
+resource "aws_s3_bucket" "static_ar_bucket-1" {
+  bucket = "ar-portfolio-v1"
+  # acl    = "private"
+
+  tags = {
+    Name = "ar-portfolio-v1"
+  }
+}
+/* resource "aws_s3_bucket_acl" "static_bucket_acl" {
+  bucket = aws_s3_bucket.static_ar_bucket-1.id
+  acl    = "private"
+} */
+resource "aws_s3_bucket_versioning" "versioning" {
+    bucket = aws_s3_bucket.static_ar_bucket-1.id
+  versioning_configuration {
+    status = "Enabled"
+  }
+}
+
+resource "aws_s3_bucket_server_side_encryption_configuration" "encrypt" {
+  bucket = aws_s3_bucket.static_ar_bucket-1.id
+
+  rule {
+    apply_server_side_encryption_by_default {
+      sse_algorithm = "AES256"
+    }
+  }
+}
+# tf registry
+
+resource "aws_s3_bucket_public_access_block" "block_public_access" {
+  bucket = aws_s3_bucket.static_ar_bucket-1.id
+
+  block_public_acls       = true
+  block_public_policy     = true
+  ignore_public_acls      = true
+  restrict_public_buckets = true
+}
+
+resource "aws_s3_object" "project_files" {
+  for_each = fileset("./documents/", "**")
+  bucket = aws_s3_bucket.static_ar_bucket-1.bucket
+  key = each.value
+  source = "./documents/${each.value}"
+  etag = filemd5("./documents/${each.value}")
+}
+
+resource "aws_s3_bucket_policy" "bucket_policy" {
+  bucket = aws_s3_bucket.static_ar_bucket-1.id
+
+  policy = <<POLICY
+{
+    "Version": "2012-10-17",
+    "Statement": {
+        "Sid": "AllowCloudFrontServicePrincipalReadWrite",
+        "Effect": "Allow",
+        "Principal": {
+            "Service": "cloudfront.amazonaws.com"
+        },
+        "Action": [
+            "s3:GetObject",
+            "s3:PutObject"
+        ],
+        "Resource": "arn:aws:s3:::${aws_s3_bucket.static_ar_bucket-1.id}/*",
+        "Condition": {
+            "StringEquals": {
+                "AWS:SourceArn": "arn:aws:cloudfront::${aws_cloudfront_origin_access_control.oac.id}"
+            }
+        }
+    }
+}
+POLICY
+}
+
+locals {
+  s3_origin_id = "ar-portfolio-v1"
+}

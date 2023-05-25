@@ -4,7 +4,7 @@ terraform {
     bucket         = "ar-tf-state12"
     key            = "ar-portfolio-1/terraform.tfstate"
     region         = "us-east-1"
-    profile        = "liz-bluesky-1"
+    profile        = "lg-bluesky-ubu"
     dynamodb_table = "terraform-state-lock"
   }
 }
