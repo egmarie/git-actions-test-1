@@ -1,3 +1,8 @@
+data "aws_caller_identity" "current" {}
+
+locals {
+  mime_types = jsondecode(file("${path.module}/mime.json"))
+}
 resource "aws_s3_bucket" "static_ar_bucket-1" {
   bucket = "ar-portfolio-v1"
   # acl    = "private"
@@ -6,140 +11,70 @@ resource "aws_s3_bucket" "static_ar_bucket-1" {
     Name = "ar-portfolio-v1"
   }
 }
-/* resource "aws_s3_bucket_acl" "static_bucket_acl" {
-  bucket = aws_s3_bucket.static_ar_bucket-1.id
-  acl    = "private"
-} */
-resource "aws_s3_bucket_versioning" "versioning" {
-    bucket = aws_s3_bucket.static_ar_bucket-1.id
-  versioning_configuration {
-    status = "Enabled"
-  }
-}
 
-resource "aws_s3_bucket_server_side_encryption_configuration" "encrypt" {
+resource "aws_s3_bucket_ownership_controls" "static_ar_bucket-1_own" {
   bucket = aws_s3_bucket.static_ar_bucket-1.id
-
   rule {
-    apply_server_side_encryption_by_default {
-      sse_algorithm = "AES256"
-    }
+    object_ownership = "BucketOwnerPreferred"
   }
 }
-# tf registry
 
-resource "aws_s3_bucket_public_access_block" "block_public_access" {
+resource "aws_s3_bucket_public_access_block" "static_ar_bucket-1_pub" {
   bucket = aws_s3_bucket.static_ar_bucket-1.id
 
   block_public_acls       = false
   block_public_policy     = false
   ignore_public_acls      = false
-  restrict_public_buckets = false
+  restrict_public_buckets = true
 }
 
-resource "aws_s3_object" "project_files" {
-  for_each = fileset("./documents/", "**")
-  bucket = aws_s3_bucket.static_ar_bucket-1.bucket
-  key = each.value
-  source = "./documents/${each.value}"
-  etag = filemd5("./documents/${each.value}")
-}
+resource "aws_s3_bucket_acl" "static_ar_bucket-1_acl" {
+  depends_on = [
+    aws_s3_bucket_ownership_controls.static_ar_bucket-1_own,
+    aws_s3_bucket_public_access_block.static_ar_bucket-1_pub,
+  ]
 
-data "aws_iam_policy_document" "bucket_policy_doc" {
-  statement {
-    principals {
-      type        = "AWS"
-      identifiers = ["*"]
-    }
-
-    actions = [
-      "s3:GetObject",
-    ]
-
-    resources = [
-      aws_s3_bucket.static_ar_bucket-1.arn,
-      "${aws_s3_bucket.static_ar_bucket-1.arn}/*",
-    ]
-  }
-  /* {
-    principals = {
-      type        = "Service"
-      identifiers = ["cloudfront.amazonaws.com"]
-    }
-
-    condition = {
-      test     = "StringEquals"
-      variable = "aws:SourceArn"
-      values = [
-        "${aws_cloudfront_distribution.cf_distribution.arn}",
-      ]
-    }
-
-    actions = [
-      "s3:GetObject",
-      "s3:PutObject"
-    ]
-
-    resources = [
-      aws_s3_bucket.static_ar_bucket-1.arn,
-      "${aws_s3_bucket.static_ar_bucket-1.arn}/*",
-    ]
-  }, */
-  /* {
-    principals = {
-      type        = "AWS"
-      identifiers = ["*"]
-    }
-
-    actions = [
-      "s3:GetObject",
-    ]
-
-    resources = [
-      aws_s3_bucket.static_ar_bucket-1.arn,
-      "${aws_s3_bucket.static_ar_bucket-1.arn}/*",
-    ]
-  } */
-  /* ]  */
-}
-
-resource "aws_s3_bucket_policy" "bucket_policy" {
   bucket = aws_s3_bucket.static_ar_bucket-1.id
-  policy = data.aws_iam_policy_document.bucket_policy_doc.json
+  acl    = "public-read"
 }
 
-/* data "aws_iam_policy_document" "bucket_policy_public_doc" {
+resource "aws_s3_bucket_policy" "allow_access_from_another_account" {
+  bucket = aws_s3_bucket.static_ar_bucket-1.id
+  policy = data.aws_iam_policy_document.allow_access_from_another_account.json
+}
+
+resource "aws_s3_object" "dist_folder" {
+      bucket   = aws_s3_bucket.static_ar_bucket-1.id
+      key      = each.value
+      source   = "/home/dev/git-actions-test-1/dist/${each.value}"
+      for_each = fileset("/home/dev/git-actions-test-1/dist/", "*")
+      content_type = lookup(local.mime_types, regex("\\.[^.]+$", each.value), null)
+}
+
+resource "aws_s3_object" "dist_assets_folder" {
+      bucket   = aws_s3_bucket.static_ar_bucket-1.id
+      key      = "assets/${each.value}"
+      source   = "/home/dev/git-actions-test-1/dist/assets/${each.value}"
+      for_each = fileset("/home/dev/git-actions-test-1/dist/assets", "*")
+      content_type = lookup(local.mime_types, regex("\\.[^.]+$", "assets/${each.value}"), null)
+}
+
+data "aws_iam_policy_document" "allow_access_from_another_account" {
   statement {
     principals {
       type        = "AWS"
-      identifiers = ["*"]
+      identifiers = ["arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity ${aws_cloudfront_origin_access_identity.static_ar_bucket-1.id}"]
     }
 
     actions = [
-      "s3:GetObject",
+      "s3:GetObject"
     ]
 
     resources = [
-      aws_s3_bucket.static_ar_bucket-1.arn,
       "${aws_s3_bucket.static_ar_bucket-1.arn}/*",
     ]
   }
-} */
+}
 
-    /* {
-        "Effect": "Allow",
-        "Sid": "AllowAccessToListFilesInAllFolders",
-        "Action": [
-            "s3:GetObject",
-            "s3:PutObject"
-        ],
-        "Resource": "arn:aws:s3:::${aws_s3_bucket.static_ar_bucket-1.id}",
-        "Condition": {
-            "StringEquals": {
-                "aws:SourceArn": [
-                    "${aws_cloudfront_distribution.cf_distribution.arn}}"
-                ],
-            }
-        }
-    } */
+
 

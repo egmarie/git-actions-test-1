@@ -12,13 +12,6 @@ provider "aws" {
   }
 }
 
-/* resource "aws_route53_zone" "main" {
-  comment = "our main hosted zone"
-  name    = "uncbluesky.com"
-  tags = {
-    "Name" = "BSI Domain"
-  }
-} */
 # terraform init
 # terraform fmt    >> prettify the code
 # terraform validate  >> check if validate
