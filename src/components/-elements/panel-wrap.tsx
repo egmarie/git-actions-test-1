@@ -1,5 +1,5 @@
 // React | Three Imports
-import { useFrame, extend } from '@react-three/fiber'
+import { useFrame, extend} from '@react-three/fiber'
 import { useContext } from "react";
 import * as THREE from 'three'
 import { Html } from '@react-three/drei'
@@ -16,7 +16,6 @@ import { Panel } from './panel'
 let i:number = 0;
 
 export function PanelWrapper() {
-
 // Definitions
       const camera = useContext(CamContext);
       let vec = new THREE.Vector3
@@ -42,7 +41,8 @@ export function PanelWrapper() {
         position: number[];} = PageInfo[0]
 
       const panelCont = document.getElementById("panelContainer")
-        
+      const windowWidth = window.document.body.clientWidth
+      const windowHeight = window.document.body.clientHeight
 
 
 // Next Topic
@@ -91,12 +91,21 @@ export function PanelWrapper() {
 
             state.camera.position.lerp(vec.set(page.position[0], page.position[1], page.position[2] + 5), .01)
             camera?.setCam(vec.set( page.position[0], page.position[1], page.position[2] + 5 ))
-            panelCont.style.top = page.panelPos[0] + "px"
-            panelCont.style.left = page.panelPos[1] + "px"
+            window.addEventListener("resize", () => {
+              window.onresize = () => { 
+                if (panelCont) {  
+                  if (windowWidth >= 600) { 
+                    panelCont.style.left = (windowWidth / 5) + 'px'
+                    panelCont.style.bottom = (windowHeight / 5) + 'px'
+                  } else {
+                    panelCont.style.bottom = (windowHeight / 1.5) + "px"
+                    panelCont.style.left = (windowWidth / 2) + "px"
+                  }
+                }
+              }})
             state.camera.updateProjectionMatrix()
-          null
-        }
-        )
+        null
+      })
 
 
   return(

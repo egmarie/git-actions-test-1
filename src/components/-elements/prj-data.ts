@@ -10,7 +10,7 @@ export const PageInfo: {
     {
     name : "AR/VR",
     link : "https://www.uncbluesky.com/augmented-reality",
-    description : "222222222222 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nulla facilisi nullam vehicula ipsum a arcu cursus vitae congue. Elit sed vulputate mi sit amet mauris commodo quis imperdiet. Ultricies mi eget mauris pharetra et ultrices. ",
+    description : "222222222222 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nulla facilisi nullam vehicula ipsum a arcu cursus vitae congue. Elit sed vulputate mi sit amet. ",
     scene : "VR",
     panelPos: [ 50, 50],
     position : [ -1, -4, 9 ]
@@ -18,7 +18,7 @@ export const PageInfo: {
     {
       name : "ARIA",
       link : "https://www.uncbluesky.com/aria",
-      description : "000000000 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nulla facilisi nullam vehicula ipsum a arcu cursus vitae congue. Elit sed vulputate mi sit amet mauris commodo quis imperdiet. Ultricies mi eget mauris pharetra et ultrices. ",
+      description : "000000000 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nulla facilisi nullam vehicula ipsum a arcu cursus vitae congue. Elit sed vulputate mi sit amet.",
       scene : "Aria",
       panelPos: [ 50, 800],
       position : [ -33, -6, -23 ]
@@ -26,7 +26,7 @@ export const PageInfo: {
     {
       name : "LOOMO",
       link : "https://www.uncbluesky.com/roboj",
-      description : "33333333 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nulla facilisi nullam vehicula ipsum a arcu cursus vitae congue. Elit sed vulputate mi sit amet mauris commodo quis imperdiet. Ultricies mi eget mauris pharetra et ultrices. ",
+      description : "33333333 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nulla facilisi nullam vehicula ipsum a arcu cursus vitae congue. Elit sed vulputa. ",
       scene : "Loomo",
       panelPos: [ 50, 50],
       position : [ -11, -5, -22 ]
@@ -34,7 +34,7 @@ export const PageInfo: {
     {
       name : "VOLUMETRIC CAPTURE",
       link : "https://www.uncbluesky.com/volumetric-capture",
-      description : "1111111 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nulla facilisi nullam vehicula ipsum a arcu cursus vitae congue. Elit sed vulputate mi sit amet mauris commodo quis imperdiet. Ultricies mi eget mauris pharetra et ultrices. ",
+      description : "1111111 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labo.",
       scene : "Volcap",
       panelPos: [ 200, 900],
       position : [ 8, -2, -27 ]

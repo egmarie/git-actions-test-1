@@ -20,15 +20,6 @@ body {
   margin: 0px;
 }
 
-#Wide {
-  width: 100%;
-  height: 100%;
-  max-width: 1800px;
-  height: 80vh;
-  justify-content: center;
-  display: flex;
-  margin: auto;
-}
 .footer {
   position: fixed;
   bottom: 0;
@@ -63,7 +54,10 @@ body {
   /* position: absolute; */
   /* top: 2px;
   right: 3px; */
-  /* transform: none; */
+  /* transform: none; 
+  
+  
+  */
   position: 'absolute';
   width: 4rem;
   height: 4rem;
@@ -75,6 +69,20 @@ body {
 #fullmap-icon {
   width: 2em;
   height: auto;
+}
+#Wide {
+  width: 100%;
+  max-width: 1800px;
+  height: 70vh;
+  justify-content: center;
+  display: flex;
+  margin: auto;
+}
+
+@media screen and (min-width: 500px) {
+  #Wide {
+    height: 65vh;
+  }
 }
 
 

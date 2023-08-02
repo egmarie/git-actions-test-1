@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@react-spring/three": "^9.6.1",
-    "@react-three/drei": "^9.56.25",
+    "@react-three/drei": "^9.80.1",
     "@react-three/fiber": "^8.11.2",
     "@react-three/flex": "^1.0.1",
     "@tweakpane/core": "^1.1.4",
