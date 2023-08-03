@@ -9,8 +9,9 @@ extend({ Canvas, Html, useFrame, THREE, PerspectiveCamera, useThree, Flex, Box }
 // Scene Imports
 import { CamContextType } from './config/@types.context';
 import { Aria, Volcap, VR, Loomo } from './-projects/index'
-import { PanelWrapper, Camera } from './-elements/index'
-import LabModel from './models/lab-model'
+import { PanelWrapper } from './-elements/index'
+// import LabModel from './models/lab-model'
+import Lab from './models/lab'
 import Intro1 from './-projects/intro'
 
 // Create Context
@@ -27,22 +28,21 @@ export const AppFiber: React.FunctionComponent = () => {
 
   return (
     <>
-<div id="Wide" className="d-flex flex-row">
+<div id="Wide" className="d-flex flex-column flex-sm-column flex-lg-row flex-xl-row">
         
         <CamContext.Provider value={{camPos, setCam, fullmap, setMap, scenes, setScene}}>
         { window.location.pathname === '/' ? <Intro1 /> : ''}
+        { window.location.pathname === '/innovate' ? <PanelWrapper /> : ''}
               <Canvas shadows>
 
-                    
-                    { window.location.pathname === '/innovate' ? <PanelWrapper /> : ''}
                     {/* <Buttons /> */}
-                    <Camera />
+                    {/* <Camera /> */}
                     <color attach="background" args={['#E3F2FF']} />
-                    {/* <ambientLight intensity={0.9} color={0xffffff} /> */}
+                    <ambientLight intensity={0.1} color={0xffffff} />
                     {/* <directionalLight color={0xFCFC4D} position={[0, 2, 19]} />  */}
 
-                    <LabModel />
-                    {/* <ToonLabModel /> */}
+                    {/* <LabModel /> */}
+                    <Lab />
                     
                     <Aria />
                     <Volcap />

@@ -36,11 +36,11 @@ export default function Intro1() {
             <div id="intro" className="p-3 m-7">
                     <h4>Welcome to Blue Sky Innovations</h4>
                     <div className="p-2">
-                        <h6>We specialize in emerging tech that solves problems and imporves customer experiments.</h6>
+                        <h6>We specialize in emerging tech that solves problems and improves customer experiences.</h6>
                     </div>
                     <Link type="button" to="/innovate">
                         <button type="button" onClick={() => Begin()}>Learn more in 3D</button>
-                        </Link>
+                    </Link>
                    
             </div>
 

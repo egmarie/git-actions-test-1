@@ -22,6 +22,7 @@ export default function LabModel() {
   //     loader.setDRACOLoader(dracoLoader);
   //   }
   // );
+  console.log(scene)
 
     return (
       <Suspense fallback={null}>

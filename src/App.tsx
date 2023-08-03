@@ -26,7 +26,7 @@ function App() {
   return (
     <div className="App">
       <Nav />
-      <RouterProvider router={router} />
+        <RouterProvider router={router} />
       <Footer />
     </div>
   )

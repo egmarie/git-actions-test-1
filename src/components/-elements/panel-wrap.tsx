@@ -1,9 +1,9 @@
 // React | Three Imports
-import { useFrame, extend} from '@react-three/fiber'
+import { useFrame } from '@react-three/fiber'
 import { useContext } from "react";
 import * as THREE from 'three'
-import { Html } from '@react-three/drei'
-extend({ Html, useFrame, THREE })
+// import { Html } from '@react-three/drei'
+// extend({ Html, useFrame, THREE })
 
 
 // Context
@@ -80,37 +80,36 @@ export function PanelWrapper() {
             console.log(camera?.scenes)
         }
 // Upon Selection, change camera position
-        useFrame(state => {
-            page2 = PageInfo.filter((item) => item.scene === camera?.scenes)
-            page = page2[0]
-            if (page.scene === "Volcap") {
-              state.camera.lookAt(vec.set(page.position[0], page.position[1] + 0.5, page.position[2]))
-            } else {
-              state.camera.lookAt(vec.set(page.position[0], page.position[1] - 1, page.position[2]))
-            }
+      //   useFrame(state => {
+      //       page2 = PageInfo.filter((item) => item.scene === camera?.scenes)
+      //       page = page2[0]
+      //       if (page.scene === "Volcap") {
+      //         state.camera.lookAt(vec.set(page.position[0], page.position[1] + 0.5, page.position[2]))
+      //       } else {
+      //         state.camera.lookAt(vec.set(page.position[0], page.position[1] - 1, page.position[2]))
+      //       }
 
-            state.camera.position.lerp(vec.set(page.position[0], page.position[1], page.position[2] + 5), .01)
-            camera?.setCam(vec.set( page.position[0], page.position[1], page.position[2] + 5 ))
-            window.addEventListener("resize", () => {
-              window.onresize = () => { 
-                if (panelCont) {  
-                  if (windowWidth >= 600) { 
-                    panelCont.style.left = (windowWidth / 5) + 'px'
-                    panelCont.style.bottom = (windowHeight / 5) + 'px'
-                  } else {
-                    panelCont.style.bottom = (windowHeight / 1.5) + "px"
-                    panelCont.style.left = (windowWidth / 2) + "px"
-                  }
-                }
-              }})
-            state.camera.updateProjectionMatrix()
-        null
-      })
+      //       state.camera.position.lerp(vec.set(page.position[0], page.position[1], page.position[2] + 5), .01)
+      //       camera?.setCam(vec.set( page.position[0], page.position[1], page.position[2] + 5 ))
+      //       window.addEventListener("resize", () => {
+      //         window.onresize = () => { 
+      //           if (panelCont) {  
+      //             if (windowWidth >= 600) { 
+      //               panelCont.style.left = (windowWidth / 5) + 'px'
+      //               panelCont.style.bottom = (windowHeight / 5) + 'px'
+      //             } else {
+      //               panelCont.style.bottom = (windowHeight / 1.5) + "px"
+      //               panelCont.style.left = (windowWidth / 2) + "px"
+      //             }
+      //           }
+      //         }})
+      //       state.camera.updateProjectionMatrix()
+      //   null
+      // })
 
 
   return(
-    <Html zIndexRange={[6000000]}>
-      {
+    // <Html zIndexRange={[6000000]}>
         (camera?.scenes === PageInfo[0].scene) ?
             <Panel text={PageInfo[0]} next={Next} back={Back}  /> :
         (camera?.scenes === PageInfo[1].scene) ?
@@ -120,8 +119,7 @@ export function PanelWrapper() {
         (camera?.scenes === PageInfo[3].scene) ?
             <Panel text={PageInfo[3]} next={Next} back={Back}  /> :
          null
-        }
-      </Html>
+      // </Html>
   )
 }
 
