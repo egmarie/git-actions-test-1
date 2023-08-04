@@ -28,7 +28,7 @@ export const AppFiber: React.FunctionComponent = () => {
 
   return (
     <>
-<div id="Wide" className="d-flex flex-column flex-sm-column flex-lg-row flex-xl-row">
+<div id="Wide" className="d-flex">
         
         <CamContext.Provider value={{camPos, setCam, fullmap, setMap, scenes, setScene}}>
         { window.location.pathname === '/' ? <Intro1 /> : ''}

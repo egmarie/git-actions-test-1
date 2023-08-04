@@ -32,7 +32,8 @@ body {
 }
 
 #logo {
-  width: 15em;
+  width: 10em;
+  height: auto;
 }
 
 .footer a {
@@ -51,13 +52,6 @@ body {
   left: 0px;
 }
 #full {
-  /* position: absolute; */
-  /* top: 2px;
-  right: 3px; */
-  /* transform: none; 
-  
-  
-  */
   position: 'absolute';
   width: 4rem;
   height: 4rem;
@@ -73,15 +67,16 @@ body {
 #Wide {
   width: 100%;
   max-width: 1800px;
-  height: 70vh;
+  height: 82.5vh;
   justify-content: center;
   display: flex;
+  flex-direction: column;
   margin: auto;
 }
 
-@media screen and (min-width: 500px) {
+@media screen and (min-width: 800px) {
   #Wide {
-    height: 65vh;
+    flex-direction: row;
   }
 }
 

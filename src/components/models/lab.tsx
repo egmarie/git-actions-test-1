@@ -10,12 +10,16 @@ extend({ OrbitControls, useGLTF, PerspectiveCamera, useAnimations, useThree})
 export default function Lab(props) {
   const group = useRef()
   const { viewport } = useThree()
-  const { nodes, materials, animations, scene, cameras } = useGLTF('/gltf/lab-07-26-v3-v1/lab-07-26-v3.gltf')
+  const { gltf, nodes, materials, animations, scene, cameras } = useGLTF('/gltf/lab-07-26-v3-v1/lab-07-26-v3.gltf')
   const { actions } = useAnimations(animations, group)
+
+  if (actions['LOOMO-whole']) {
+    actions['LOOMO-whole'].play()
+  }
   return (
     <Suspense fallback={null}>
     {/* <OrbitControls enableZoom={true} /> */}
-    <group ref={group} {...props} dispose={null} scale={(viewport.width < 12 ? (viewport.width / 27) : (viewport.width / 19))} rotation={[0.05, 179.9, 0]} object={scene} position={(viewport.width < 12 ? [-3, -4, -10] : [-7, -5, -17])} animations={animations} cameras={cameras}>
+    <group ref={group} {...props} dispose={null} scale={(viewport.width < 12 ? (viewport.width / 27) : (viewport.width / 19))} rotation={[0.05, 179.9, 0]} object={scene} position={(viewport.width < 12 ? [-3, 0, -10] : [-6, -4, -17])} animations={animations} cameras={cameras}>
       <group name="Scene">
         <group name="animated-camera-path" />
         <group name="TABLE" position={[-8.067, 0.8, -9.387]} rotation={[0, -0.842, 0]} scale={2.145}>

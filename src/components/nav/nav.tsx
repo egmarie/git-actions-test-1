@@ -5,7 +5,7 @@ function Nav() {
 
   return (
     <>
-      <header className="content-start text-start w-full p-4">
+      <header className="content-start text-start w-full p-3">
           <img id="logo" src="./BSI_LongLogo_ForWhiteBg.png" alt="logo for UNC Blue Sky Innovations." />
       </header>
     </>
