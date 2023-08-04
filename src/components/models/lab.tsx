@@ -10,12 +10,18 @@ extend({ OrbitControls, useGLTF, PerspectiveCamera, useAnimations, useThree})
 export default function Lab(props) {
   const group = useRef()
   const { viewport } = useThree()
-  const { gltf, nodes, materials, animations, scene, cameras } = useGLTF('/gltf/lab-07-26-v3-v1/lab-07-26-v3.gltf')
+  const { nodes, materials, animations, scene, cameras } = useGLTF('/gltf/lab-07-26-v3-v1/lab-07-26-v3.gltf')
   const { actions } = useAnimations(animations, group)
+  const loomo = actions['LOOMO-whole']
 
-  if (actions['LOOMO-whole']) {
-    actions['LOOMO-whole'].play()
-  }
+    loomo?.play()
+    console.log(cameras)
+    // 0-camera
+    // 1-camera
+    // 2-camera
+    // 3-camera
+    // 4-camera
+    // 5-camera
   return (
     <Suspense fallback={null}>
     {/* <OrbitControls enableZoom={true} /> */}
