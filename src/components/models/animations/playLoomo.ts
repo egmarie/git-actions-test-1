@@ -1,0 +1,15 @@
+// export const playLoomo = (actions:any) => {
+//     const loomo = actions['LOOMO-whole'].play()
+//     const LoomoCore = actions['LOOMO-core'].play()
+//     const LoomoHandle = actions['LOOMO-handle'].play()
+//     const LoomoHead = actions['LOOMO-head'].play()
+//     const LoomoHeadFrame = actions['LOOMO-head-frame'].play()
+//     const LoomoLeftPad = actions['LOOMO-left-pad'].play()
+//     const LoomoRightPad = actions['LOOMO-right-pad'].play()
+//     const LoomoLeftWheel = actions['LOOMO-left-wheel'].play()
+//     const LoomoRightWheel = actions['LOOMO-right-wheel'].play()
+//     const LoomoScreenBlank = actions['LOOMO-screen-blank'].play()
+//     const LoomoScreenHeart = actions['LOOMO-screen-heart'].play()
+//     const LoomoSideCore = actions['LOOMO-side-core'].play()
+//     const LoomoScreenMotion = actions['LOOMO-arms'].play()
+//   }

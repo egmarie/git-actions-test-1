@@ -8,22 +8,6 @@ export const PageInfo: {
   position: number[];
 }[] = [
     {
-    name : "AR/VR",
-    link : "https://www.uncbluesky.com/augmented-reality",
-    description : "222222222222 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nulla facilisi nullam vehicula ipsum a arcu cursus vitae congue. Elit sed vulputate mi sit amet. ",
-    scene : "VR",
-    panelPos: [ 50, 50],
-    position : [ -1, -4, 9 ]
-    },
-    {
-      name : "ARIA",
-      link : "https://www.uncbluesky.com/aria",
-      description : "000000000 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nulla facilisi nullam vehicula ipsum a arcu cursus vitae congue. Elit sed vulputate mi sit amet.",
-      scene : "Aria",
-      panelPos: [ 50, 800],
-      position : [ -33, -6, -23 ]
-    },
-    {
       name : "LOOMO",
       link : "https://www.uncbluesky.com/roboj",
       description : "33333333 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nulla facilisi nullam vehicula ipsum a arcu cursus vitae congue. Elit sed vulputa. ",
@@ -38,6 +22,22 @@ export const PageInfo: {
       scene : "Volcap",
       panelPos: [ 200, 900],
       position : [ 8, -2, -27 ]
+    },
+    {
+      name : "AR/VR",
+      link : "https://www.uncbluesky.com/augmented-reality",
+      description : "222222222222 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nulla facilisi nullam vehicula ipsum a arcu cursus vitae congue. Elit sed vulputate mi sit amet. ",
+      scene : "VR",
+      panelPos: [ 50, 50],
+      position : [ -1, -4, 9 ]
+    },
+    {
+      name : "ARIA",
+      link : "https://www.uncbluesky.com/aria",
+      description : "000000000 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nulla facilisi nullam vehicula ipsum a arcu cursus vitae congue. Elit sed vulputate mi sit amet.",
+      scene : "Aria",
+      panelPos: [ 50, 800],
+      position : [ -33, -6, -23 ]
     },
 
   ]

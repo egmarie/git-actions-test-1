@@ -10,8 +10,7 @@ extend({ Canvas, Html, useFrame, THREE, PerspectiveCamera, useThree, Flex, Box }
 import { CamContextType } from './config/@types.context';
 import { Aria, Volcap, VR, Loomo } from './-projects/index'
 import { PanelWrapper } from './-elements/index'
-// import LabModel from './models/lab-model'
-import Lab from './models/lab'
+import Lab from './models/lab-v3'
 import Intro1 from './-projects/intro'
 
 // Create Context
@@ -20,7 +19,6 @@ export const CamContext = createContext<CamContextType | null>(null);
 //
 //
 export const AppFiber: React.FunctionComponent = () => {
-
 
   const [ camPos, setCam ] = useState(new THREE.Vector3(0, 4, 60));
   const [ fullmap, setMap ] = useState(true);
