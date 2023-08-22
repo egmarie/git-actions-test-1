@@ -14,7 +14,7 @@ export default function Lab(props:any) {
 
   let camPos = camera?.camPos
   let scene1 = camera?.scenes
-  let setScene1 = camera?.setScene
+  // let setScene1 = camera?.setScene
   console.log(scene1)
   const group = useRef()
   useEffect(() => {
@@ -41,8 +41,10 @@ export default function Lab(props:any) {
   //
     actions['vol-cap-girl-animation']?.play()
   //
-    actions['LOOMO-whole']?.play()
+    actions['LOOMO-arms']?.play()
+    actions['LOOMO-whole']?.play() // 1
     actions['LOOMO-core']?.play()
+    actions['LOOMO-base']?.play()
     actions['LOOMO-handle']?.play()
     actions['LOOMO-head']?.play()
     actions['LOOMO-head-frame']?.play()
@@ -52,8 +54,9 @@ export default function Lab(props:any) {
     actions['LOOMO-right-wheel']?.play()
     actions['LOOMO-screen-blank']?.play()
     actions['LOOMO-screen-heart']?.play()
+    actions['LOOMO-screen-motion']?.play()
     actions['LOOMO-side-core']?.play()
-    actions['LOOMO-arms']?.play()
+
   // 
     actions['ARIA-corner-1']?.play()
     actions['ARIA-corner-2']?.play()
