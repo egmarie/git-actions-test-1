@@ -1,5 +1,5 @@
 // React | Three Imports
-import { useFrame } from '@react-three/fiber'
+// import { useFrame } from '@react-three/fiber'
 import { useContext } from "react";
 import * as THREE from 'three'
 // import { Html } from '@react-three/drei'
@@ -18,21 +18,21 @@ let i:number = 0;
 export function PanelWrapper() {
 // Definitions
       const camera = useContext(CamContext);
-      let vec = new THREE.Vector3
+      // let vec = new THREE.Vector3
       let vec2 = new THREE.Vector3
 
-      let page2: { name: string; 
-        link: string; 
-        description: string; 
-        scene: string;
-        panelPos: number[];
-        position: number[];}[];
-      let page: { name: string; 
-        link: string; 
-        description: string; 
-        scene: string;
-        panelPos: number[];
-        position: number[];} = PageInfo[0]
+      // let page2: { name: string; 
+      //   link: string; 
+      //   description: string; 
+      //   scene: string;
+      //   panelPos: number[];
+      //   position: number[];}[];
+      // let page: { name: string; 
+      //   link: string; 
+      //   description: string; 
+      //   scene: string;
+      //   panelPos: number[];
+      //   position: number[];} = PageInfo[0]
       let next: { name: string; 
         link: string; 
         description: string; 
@@ -40,9 +40,9 @@ export function PanelWrapper() {
         panelPos: number[];
         position: number[];} = PageInfo[0]
 
-      const panelCont = document.getElementById("panelContainer")
-      const windowWidth = window.document.body.clientWidth
-      const windowHeight = window.document.body.clientHeight
+      // const panelCont = document.getElementById("panelContainer")
+      // const windowWidth = window.document.body.clientWidth
+      // const windowHeight = window.document.body.clientHeight
 
 
 // Next Topic
@@ -55,6 +55,7 @@ export function PanelWrapper() {
               next = PageInfo[i]
               console.log(i + " IIIII")
               camera?.setScene(next.scene)
+              console.log(camera?.scenes)
               camera?.setCam(vec2.set(next.position[0], next.position[1], next.position[2]))
 
             } else {

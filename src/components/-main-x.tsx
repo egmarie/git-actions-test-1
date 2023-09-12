@@ -8,9 +8,9 @@ extend({ Canvas, Html, useFrame, THREE, PerspectiveCamera, useThree, Flex, Box }
 
 // Scene Imports
 import { CamContextType } from './config/@types.context';
-import { Aria, Volcap, VR, Loomo } from './-projects/index'
+// import { Aria, Volcap, VR, Loomo } from './-projects/index'
 import { PanelWrapper } from './-elements/index'
-import Lab from './models/lab-v3'
+import { Lab } from './models/lab-v11'
 import Intro1 from './-projects/intro'
 
 // Create Context
@@ -25,31 +25,27 @@ export const AppFiber: React.FunctionComponent = () => {
   const [ scenes, setScene ] = useState('');
 
   return (
-    <>
-<div id="Wide" className="d-flex">
+  <>
+  <div id="Wide" className="d-flex">
         
-        <CamContext.Provider value={{camPos, setCam, fullmap, setMap, scenes, setScene}}>
+    <CamContext.Provider value={{camPos, setCam, fullmap, setMap, scenes, setScene}}>
         { window.location.pathname === '/' ? <Intro1 /> : ''}
         { window.location.pathname === '/innovate' ? <PanelWrapper /> : ''}
-              <Canvas shadows>
+          <Canvas shadows>
 
-                    {/* <Buttons /> */}
-                    {/* <Camera /> */}
-                    <color attach="background" args={['#E3F2FF']} />
-                    <ambientLight intensity={0.1} color={0xffffff} />
-                    {/* <directionalLight color={0xFCFC4D} position={[0, 2, 19]} />  */}
-
-                    {/* <LabModel /> */}
-                    <Lab />
+              <color attach="background" args={['#E3F2FF']} />
+              {/* <ambientLight intensity={0.1} color={0xffffff} /> */}
+              {/* <directionalLight color={0xFCFC4D} position={[0, 2, 19]} />  */}
+              <Lab />
                     
-                    <Aria />
-                    <Volcap />
-                    <VR />
-                    <Loomo />
+              {/* <Aria />
+                <Volcap />
+                <VR />
+                <Loomo /> */}
 
-                </Canvas>
+          </Canvas>
 
-        </CamContext.Provider>
+    </CamContext.Provider>
 </div>
 
     </>
