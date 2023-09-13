@@ -284,19 +284,19 @@ export const Lab: React.FunctionComponent = (props:any) => {
           <primitive object={nodes.mixamorigHips} />
           <skinnedMesh name="secretary-model" geometry={nodes['secretary-model'].geometry} material={materials['Secreetary_shader.001']} skeleton={nodes['secretary-model'].skeleton} />
         </group>
-        <spotLight name="Point" intensity={1.353} angle={0.794} penumbra={0.15} decay={2} distance={9.67} position={[-30.442, 3.664, 17.647]} rotation={[-2.261, -0.523, -0.27]} scale={0.059}>
-          <group position={[0, 0, -1]} />
-        </spotLight>
         <PerspectiveCamera name="vr-camera" makeDefault={false} far={1000} near={0.1} fov={22.895} position={[-5.164, 10.935, -1.95]} rotation={[-2.633, 0.718, 2.79]} />
         <PerspectiveCamera name="vol-cap-camera" makeDefault={false} far={1000} near={0.1} fov={22.895} position={[10.569, 28.363, -25.707]} rotation={[-2.162, 0.874, 2.29]} />
         <PerspectiveCamera name="opening-camera" makeDefault={false} far={1000} near={0.1} fov={22.895} position={[81.283, 63.531, -86.473]} rotation={[-2.523, 0.701, 2.711]} />
         <PerspectiveCamera name="loomo-camera" makeDefault={false} far={1000} near={0.1} fov={22.895} position={[11.43, 13.003, -24.303]} rotation={[-2.454, 0.624, 2.694]} />
         <PerspectiveCamera name="aria-camera" makeDefault={false} far={1000} near={0.1} fov={22.895} position={[22.311, 20.733, -15.631]} rotation={[-2.67, 0.528, 2.89]} />
-        <pointLight name="loomo-light" intensity={1.194} decay={2} position={[-1.251, -0.932, -42.463]} rotation={[3.13, -0.111, 2.801]} scale={1.831} />
-        <pointLight name="outside-light-2" intensity={19.099} decay={2} color="#ffb95c" position={[-69.836, 9.268, 18.928]} rotation={[2.84, 1.108, -1.3]} scale={[-4.209, -21.145, -20.963]} />
-        <pointLight name="main-light" intensity={3.581} decay={2} color="#ffedca" position={[-12.195, 36.175, 8.69]} rotation={[-Math.PI / 2, 0, 0]} scale={3.635} />
+        <pointLight name="loomo-light" intensity={1.194} decay={2} position={[-1.251, -0.932, -42.463]} rotation={[3.13, -0.111, 2.801]} scale={1.831} /> 
+        <pointLight name="outside-light-2" intensity={1} decay={2} color="#ffb95c" position={[-69.836, 9.268, 18.928]} rotation={[2.84, 1.108, -1.3]} scale={[-4.209, -21.145, -20.963]} />
+        <pointLight name="main-light" intensity={1.5} decay={2} color="#ffedca" position={[-12.195, 36.175, 8.69]} rotation={[-Math.PI / 2, 0, 0]} scale={3.635} />
         <pointLight name="lamp-light" intensity={0.398} decay={2} position={[-0.586, 8.197, 28.362]} rotation={[-Math.PI / 2, 0, 0]} />
-        <pointLight name="spot-light4001" intensity={0.557} decay={2} position={[-22.863, 4.329, -34.945]} rotation={[3.13, 0.114, 2.804]} scale={1.831} />
+        <pointLight name="spot-light4001" intensity={0.1} decay={2} position={[-22.863, 4.329, -34.945]} rotation={[3.13, 0.114, 2.804]} scale={1.831} />
+        <spotLight name="Point" intensity={1.353} angle={0.794} penumbra={0.15} decay={2} distance={9.67} position={[-30.442, 3.664, 17.647]} rotation={[-2.261, -0.523, -0.27]} scale={0.059}>
+          <group position={[0, 0, -1]} />
+        </spotLight>
         <mesh name="floor" geometry={nodes.floor.geometry} material={materials.floor} position={[-13.449, -5.085, 4.559]} rotation={[-Math.PI, 0, 0]} scale={-28.046} />
         <group name="left-wall" position={[-13.449, 5.551, 32.001]} rotation={[Math.PI, 0, Math.PI]} scale={[25, 5.254, 0.604]}>
           <mesh name="Cube044" geometry={nodes.Cube044.geometry} material={materials['wall-2']} />
