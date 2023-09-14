@@ -30,18 +30,11 @@ export const AppFiber: React.FunctionComponent = () => {
         
     <CamContext.Provider value={{camPos, setCam, fullmap, setMap, scenes, setScene}}>
         { window.location.pathname === '/' ? <Intro1 /> : ''}
-        { window.location.pathname === '/innovate' ? <PanelWrapper /> : ''}
+        {  window.location.pathname !== '/' ? <PanelWrapper /> : ''}
           <Canvas shadows>
 
               <color attach="background" args={['#E3F2FF']} />
-              {/* <ambientLight intensity={0.1} color={0xffffff} /> */}
-              {/* <directionalLight color={0xFCFC4D} position={[0, 2, 19]} />  */}
               <Lab />
-                    
-              {/* <Aria />
-                <Volcap />
-                <VR />
-                <Loomo /> */}
 
           </Canvas>
 

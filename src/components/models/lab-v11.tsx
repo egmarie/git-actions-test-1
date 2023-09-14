@@ -16,13 +16,11 @@ import * as THREE from "three"
 import { CamContext } from '../-main-x'
 
 import * as volcapMp4F from "./volcap-scene.mp4"
-
-
-// import * as vrMp4 from "./vr-scene.mp4"
+import * as vrMp4F from "./vr-scene.mp4"
 extend({ OrbitControls, useGLTF, PerspectiveCamera, useAnimations, useCamera, useThree})
 
 export const Lab: React.FunctionComponent = (props:any) => {
-  // const volcapMp4 = volcapMp4F
+
   const [ camState, setCamState ] = useState('opening')
   const camera = useContext(CamContext)
   const { viewport } = useThree()
@@ -30,12 +28,14 @@ export const Lab: React.FunctionComponent = (props:any) => {
   const group = useRef()
   const { actions } = useAnimations(animations, group)
 
-  // const camRef = useRef()
-  // const vrRef = useRef()
-  // const volcapRef = useRef()
-  // const loomoRef = useRef()
-  // const ariaRef = useRef()
-  // const openingRef = useRef()
+  const camRef = useRef()
+  const vrRef = useRef()
+  const volcapRef = useRef()
+  const loomoRef = useRef()
+  const ariaRef = useRef()
+  const openingRef = useRef()
+
+
 
   const [ volcapMp4 ] = useState(() => {
     const vid = document.createElement("video");
@@ -45,106 +45,109 @@ export const Lab: React.FunctionComponent = (props:any) => {
     vid.muted = true;
     vid.play();
     return vid;
-  });
-  console.log(volcapMp4)
-  // const loomoCamera = useCamera(cameras[3])
+  })
+
+  const [ vrMp4 ] = useState(() => {
+    const vid = document.createElement("video");
+    vid.src = vrMp4F.default;
+    vid.crossOrigin = "Anonymous"
+    vid.loop = true;
+    vid.muted = true;
+    vid.play();
+    return vid;
+  })
+
     useEffect(() => {
-      if (camera?.scenes === 'Volcap') {
-          setCamState('volcap')
-          const volcapAnimations = actions['vol-cap-camera-animation']?.play()
-          // console.log(volcapAnimations?._mixer)
-          volcapAnimations?._mixer.addEventListener('finished', () => {
-            console.log('finished')
-            alert('finished')
-          })
-          console.log(volcapAnimations)
+      const loomoMixer = actions['loomo-camera-animation']?._mixer
+      const volcapMixer = actions['vol-cap-camera-animation']?._mixer
+      const vrMixer = actions['vr-camera-animation']?._mixer
+      const ariaMixer = actions['aria-camera-animation']?._mixer
+      const openingMixer = actions['opening-camera-animation']?._mixer
+      actions['loomo-camera-animation'].clampWhenFinished = true
+      actions['loomo-camera-animation']?.setLoop(THREE.LoopOnce, 1)
+      actions['vol-cap-camera-animation'].clampWhenFinished = true
+      actions['vol-cap-camera-animation']?.setLoop(THREE.LoopOnce, 1)
+      actions['vr-camera-animation'].clampWhenFinished = true
+      actions['vr-camera-animation']?.setLoop(THREE.LoopOnce, 1)
+      actions['aria-camera-animation'].clampWhenFinished = true
+      actions['aria-camera-animation']?.setLoop(THREE.LoopOnce, 1)
+      actions['opening-camera-animation'].clampWhenFinished = true
+      actions['opening-camera-animation']?.setLoop(THREE.LoopOnce, 1)
+      actions['VR-headset'].clampWhenFinished = true
+      actions['VR-headset']?.setLoop(THREE.LoopOnce, 1)
 
-
-        } else if (camera?.scenes === 'VR') {
-          setCamState('vr')
-          const vrAnimations = actions['vr-camera-animation']?.play()
-          // vrAnimations?._mixer.addEventListener('finished', () => {
-          //   console.log('finished')
-          //   alert('finished')
-          // })
-      } else if (camera?.scenes === 'Loomo') {
-        Promise.resolve(() => {
-          actions['loomo-camera-animation']?.play()
-          console.log("run animations")
-        }).then(() => {
-            setCamState('loomo')
-            console.log("hello")
-          }).catch(err => console.log(err))        
-
-      } else if (camera?.scenes === 'Aria') {
-
-          actions['aria-camera-animation']?.play()
-          setCamState('aria')
-      } else {
-        // alert(camera?.scenes)
+      if (camera?.scenes === 'Loomo') {
         actions['opening-camera-animation']?.play()
-        setCamState('opening')
+        openingMixer.addEventListener('finished', () => {
+            setCamState('loomo') 
+        })
+      } else if (camera?.scenes === 'Volcap') {
+            actions['loomo-camera-animation']?.play()
+            loomoMixer.addEventListener('finished', () => {
+              console.log('finished')
+              setCamState('volcap')
+            })
+      } else if (camera?.scenes === 'VR') {
+            actions['vol-cap-camera-animation']?.play()
+            actions['VR-headset']?.play()
+            volcapMixer.addEventListener('finished', () => {
+              setCamState('vr') 
+              actions['VR-headset']?.play()
+            })
+      } else if (camera?.scenes === 'Aria') {
+            actions['vr-camera-animation']?.play()
+            vrMixer.addEventListener('finished', () => {
+              setCamState('aria')
+            })
+      } else {
+          actions['aria-camera-animation']?.play()
+          ariaMixer.addEventListener('finished', () => {
+            setCamState('opening')
+          })
       }
     })
 
 
-
-// const vrCamera = useCamera(cameras[0])
-
-
-// const loomoCamera = useCamera(cameras[3])
-// const ariaCamera = useCamera(cameras[4])
-
-// console.log(openingCamera)
-
-
-//   actions['vol-cap-girl-animation']?.play()
-// //
-//   actions['LOOMO-arms']?.play()
-//   actions['LOOMO-whole']?.play() // 1
-//   actions['LOOMO-core']?.play()
-//   actions['LOOMO-base']?.play()
-//   actions['LOOMO-handle']?.play()
-//   actions['LOOMO-head']?.play()
-//   actions['LOOMO-head-frame']?.play()
-//   actions['LOOMO-left-pad']?.play()
-//   actions['LOOMO-right-pad']?.play()
-//   actions['LOOMO-left-wheel']?.play()
-//   actions['LOOMO-right-wheel']?.play()
-//   actions['LOOMO-screen-blank']?.play()
-//   actions['LOOMO-screen-heart']?.play()
-//   actions['LOOMO-screen-motion']?.play()
-//   actions['LOOMO-side-core']?.play()
+  actions['vol-cap-girl-animation']?.play()
+//
+  actions['LOOMO-arms']?.play()
+  actions['LOOMO-whole']?.play() // 1
+  actions['LOOMO-core']?.play()
+  actions['LOOMO-base']?.play()
+  actions['LOOMO-handle']?.play()
+  actions['LOOMO-head']?.play()
+  actions['LOOMO-head-frame']?.play()
+  actions['LOOMO-left-pad']?.play()
+  actions['LOOMO-right-pad']?.play()
+  actions['LOOMO-left-wheel']?.play()
+  actions['LOOMO-right-wheel']?.play()
+  actions['LOOMO-screen-blank']?.play()
+  actions['LOOMO-screen-heart']?.play()
+  actions['LOOMO-screen-motion']?.play()
+  actions['LOOMO-side-core']?.play()
 
 // 
-  // actions['ARIA-corner-1']?.play()
-  // actions['ARIA-corner-2']?.play()
-  // actions['ARIA-corner-3']?.play()
-  // actions['ARIA-corner-4']?.play()
-  // actions['ARIA-cupcake-1']?.play()
-  // actions['ARIA-cupcake-2']?.play()
-  // actions['ARIA-cupcake-3']?.play()
-  // actions['ARIA-cupcake-4']?.play()
-  // actions['ARIA-cupcake-5']?.play()
-  // actions['ARIA-cupcake-6']?.play()
-  // actions['ARIA-cupcake-7']?.play()
-  // actions['ARIA-cupcake-8']?.play()
-  // actions['ARIA-cupcake-9']?.play()
-  // actions['ARIA-end-piece']?.play()
-  // actions['ARIA-left-claw']?.play()
-  // actions['ARIA-lightbulb']?.play()
-  // actions['ARIA-right-claw']?.play()
-  // actions['ARIA-ring-2']?.play()
-  // actions['ARIA-ring-3']?.play()
-  // actions['ARIA-ring-4']?.play()
-  // actions['ARIA-ring-5']?.play()
-
-  // actions['0-baked-action']?.play()
-  // actions['1-baked-action']?.play()
-  // actions['2-baked-action']?.play()
-  // actions['3-baked-action']?.play()
-  // actions['4-baked-action']?.play()
-  // actions['5-baked-action']?.play()
+  actions['ARIA-corner-1']?.play()
+  actions['ARIA-corner-2']?.play()
+  actions['ARIA-corner-3']?.play()
+  actions['ARIA-corner-4']?.play()
+  actions['ARIA-cupcake-1']?.play()
+  actions['ARIA-cupcake-2']?.play()
+  actions['ARIA-cupcake-3']?.play()
+  actions['ARIA-cupcake-4']?.play()
+  actions['ARIA-cupcake-5']?.play()
+  actions['ARIA-cupcake-6']?.play()
+  actions['ARIA-cupcake-7']?.play()
+  actions['ARIA-cupcake-8']?.play()
+  actions['ARIA-cupcake-9']?.play()
+  actions['ARIA-end-piece']?.play()
+  actions['ARIA-left-claw']?.play()
+  actions['ARIA-lightbulb']?.play()
+  actions['ARIA-right-claw']?.play()
+  actions['ARIA-ring-2']?.play()
+  actions['ARIA-ring-3']?.play()
+  actions['ARIA-ring-4']?.play()
+  actions['ARIA-ring-5']?.play()
 
   return (
     <Suspense fallback={null}>
@@ -284,11 +287,11 @@ export const Lab: React.FunctionComponent = (props:any) => {
           <primitive object={nodes.mixamorigHips} />
           <skinnedMesh name="secretary-model" geometry={nodes['secretary-model'].geometry} material={materials['Secreetary_shader.001']} skeleton={nodes['secretary-model'].skeleton} />
         </group>
-        <PerspectiveCamera name="vr-camera" makeDefault={false} far={1000} near={0.1} fov={22.895} position={[-5.164, 10.935, -1.95]} rotation={[-2.633, 0.718, 2.79]} />
-        <PerspectiveCamera name="vol-cap-camera" makeDefault={false} far={1000} near={0.1} fov={22.895} position={[10.569, 28.363, -25.707]} rotation={[-2.162, 0.874, 2.29]} />
-        <PerspectiveCamera name="opening-camera" makeDefault={false} far={1000} near={0.1} fov={22.895} position={[81.283, 63.531, -86.473]} rotation={[-2.523, 0.701, 2.711]} />
-        <PerspectiveCamera name="loomo-camera" makeDefault={false} far={1000} near={0.1} fov={22.895} position={[11.43, 13.003, -24.303]} rotation={[-2.454, 0.624, 2.694]} />
-        <PerspectiveCamera name="aria-camera" makeDefault={false} far={1000} near={0.1} fov={22.895} position={[22.311, 20.733, -15.631]} rotation={[-2.67, 0.528, 2.89]} />
+        <PerspectiveCamera ref={vrRef} name="vr-camera" makeDefault={camState === 'vr' ? true : false} far={1000} near={0.1} fov={22.895} position={[-5.164, 10.935, -1.95]} rotation={[-2.633, 0.718, 2.79]} />
+        <PerspectiveCamera ref={volcapRef} name="vol-cap-camera" makeDefault={camState === 'volcap' ? true : false} far={1000} near={0.1} fov={22.895} position={[10.569, 28.363, -25.707]} rotation={[-2.162, 0.874, 2.29]} />
+        <PerspectiveCamera ref={openingRef} name="opening-camera" makeDefault={camState === 'opening' ? true : false} far={1000} near={0.1} fov={22.895} position={[81.283, 63.531, -86.473]} rotation={[-2.523, 0.701, 2.711]} />
+        <PerspectiveCamera ref={loomoRef} name="loomo-camera" makeDefault={camState === 'loomo' ? true : false} far={1000} near={0.1} fov={22.895} position={[11.43, 13.003, -24.303]} rotation={[-2.454, 0.624, 2.694]} />
+        <PerspectiveCamera ref={ariaRef} name="aria-camera" makeDefault={camState === 'aria' ? true : false} far={1000} near={0.1} fov={22.895} position={[22.311, 20.733, -15.631]} rotation={[-2.67, 0.528, 2.89]} />
         <pointLight name="loomo-light" intensity={1.194} decay={2} position={[-1.251, -0.932, -42.463]} rotation={[3.13, -0.111, 2.801]} scale={1.831} /> 
         <pointLight name="outside-light-2" intensity={1} decay={2} color="#ffb95c" position={[-69.836, 9.268, 18.928]} rotation={[2.84, 1.108, -1.3]} scale={[-4.209, -21.145, -20.963]} />
         <pointLight name="main-light" intensity={1.5} decay={2} color="#ffedca" position={[-12.195, 36.175, 8.69]} rotation={[-Math.PI / 2, 0, 0]} scale={3.635} />
@@ -352,7 +355,7 @@ export const Lab: React.FunctionComponent = (props:any) => {
         <mesh name="table-base001" geometry={nodes['table-base001'].geometry} material={materials['conveyer-struct']} position={[-28.398, -4.339, 19.095]} scale={[2.667, 0.199, 2.667]} />
         <mesh name="skeleton" geometry={nodes.skeleton.geometry} material={materials['green-poles']} position={[-26.715, 2.371, -13.082]} rotation={[Math.PI, 0, Math.PI]} scale={[0.413, 5.539, 0.413]} />
 
-        <mesh name="tv" geometry={nodes.tv.geometry} material={materials.tv} position={[-38.031, 3.286, -12.896]} rotation={[-Math.PI / 2, 0, 0]}>
+        <mesh name="tv" geometry={nodes.tv.geometry} material={materials.tv} position={[-38.031, 3.286, -12.896]} rotation={[Math.PI / 2, 0, 0]}>
             <meshStandardMaterial side={THREE.DoubleSide}>
               <videoTexture attach="map" args={[volcapMp4]} />
               {/* <videoTexture attach="emissiveMap" args={[volcapMp4]} /> */}
