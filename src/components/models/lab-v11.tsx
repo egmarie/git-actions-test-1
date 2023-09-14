@@ -22,20 +22,25 @@ extend({ OrbitControls, useGLTF, PerspectiveCamera, useAnimations, useCamera, us
 export const Lab: React.FunctionComponent = (props:any) => {
 
   const [ camState, setCamState ] = useState('opening')
+  const [ vrVid, setVrVid ] = useState(false)
+
+
   const camera = useContext(CamContext)
   const { viewport } = useThree()
   const { nodes, materials, animations, scene, cameras } = useGLTF('/gltf/lab-09-12-v2.glb')
   const group = useRef()
   const { actions } = useAnimations(animations, group)
 
-  const camRef = useRef()
   const vrRef = useRef()
   const volcapRef = useRef()
   const loomoRef = useRef()
   const ariaRef = useRef()
   const openingRef = useRef()
 
-
+  document.querySelector('canvas')?.addEventListener('click', () => {
+    console.log('clicked')
+    setVrVid(false)
+  })
 
   const [ volcapMp4 ] = useState(() => {
     const vid = document.createElement("video");
@@ -88,10 +93,12 @@ export const Lab: React.FunctionComponent = (props:any) => {
               setCamState('volcap')
             })
       } else if (camera?.scenes === 'VR') {
+            setVrVid(true)
             actions['vol-cap-camera-animation']?.play()
             actions['VR-headset']?.play()
             volcapMixer.addEventListener('finished', () => {
               setCamState('vr') 
+
               actions['VR-headset']?.play()
             })
       } else if (camera?.scenes === 'Aria') {
@@ -229,6 +236,15 @@ export const Lab: React.FunctionComponent = (props:any) => {
           <mesh name="BODY" geometry={nodes.BODY.geometry} material={materials['conveyer-struct']} position={[-0.966, -0.045, 0.044]} scale={[0.072, 0.072, 0.844]} />
         </group>
         <group name="VR_HEADSET" position={[-26.087, 1.38, 18.238]} rotation={[0, -0.645, 0]}>
+{vrVid === true ?
+          <mesh position={[0.5, 0.05, -0.43]} rotation={[0, Math.PI / 2, 0]} scale={[0.18, 0.18, 0.18]}>
+              <planeGeometry />
+              {/* The material gives a mesh its texture or look.
+                In this case, it is just a uniform green*/}
+              <meshStandardMaterial side={THREE.DoubleSide} >
+                  <videoTexture attach="map" args={[vrMp4]} />
+              </meshStandardMaterial>
+          </mesh>: ''}
           <group name="Cube022" />
           <group name="Cube024" />
           <mesh name="Circle006" geometry={nodes.Circle006.geometry} material={materials['belt-black']} position={[2.14, 0, 0]} rotation={[0, 0, -Math.PI / 2]} scale={0.439} />
@@ -361,6 +377,7 @@ export const Lab: React.FunctionComponent = (props:any) => {
               {/* <videoTexture attach="emissiveMap" args={[volcapMp4]} /> */}
             </meshStandardMaterial>
         </mesh>
+
         <mesh name="tv-base" geometry={nodes['tv-base'].geometry} material={materials.tv} position={[-38.551, -4.229, -12.896]} scale={0.324} />
         <mesh name="tv-pole" geometry={nodes['tv-pole'].geometry} material={materials.tv} position={[-38.655, 0.78, -12.896]} rotation={[-Math.PI, 0, -Math.PI]} scale={[-0.296, -1.517, -0.296]} />
         <mesh name="base-pole" geometry={nodes['base-pole'].geometry} material={materials['porcelain-white']} position={[-5.893, -1.507, 16.449]} scale={0.711} />
