@@ -5,7 +5,6 @@ Command: npx gltfjsx@6.2.10 lab-08-22-v2.glb
 
 https://codesandbox.io/s/react-three-fiber-videotexture-and-effectcomposer-kwn81?resolutionWidth=320&resolutionHeight=675&file=/src/App.js
 
-
 https://stackoverflow.com/questions/29974578/how-to-flip-a-three-js-texture-horizontally
 */
 
@@ -107,10 +106,10 @@ export const Lab: React.FunctionComponent = (props:any) => {
               setCamState('aria')
             })
       } else {
-          actions['aria-camera-animation']?.play()
-          ariaMixer.addEventListener('finished', () => {
-            setCamState('opening')
-          })
+          // actions['aria-camera-animation']?.play()
+          // ariaMixer.addEventListener('finished', () => {
+          //   setCamState('opening')
+          // })
       }
     })
 
