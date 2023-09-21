@@ -1,11 +1,15 @@
 // React | Three Imports
 // import { useFrame } from '@react-three/fiber'
-import { useContext } from "react";
-import * as THREE from 'three'
+import { useContext, useEffect } from "react";
+// import * as THREE from 'three'
 // import { Html } from '@react-three/drei'
 // extend({ Html, useFrame, THREE })
 
-
+import { useDispatch, useSelector } from 'react-redux'
+import type { RootState, AppDispatch } from '../redux/store'
+import { setCurrent } from '../redux/current-slice'
+import { setPrevious } from '../redux/previous-slice'
+import { setDirection } from '../redux/direction-slice'
 // Context
 import { CamContext } from '../-main-x';
 import { PageInfo } from './prj-data'
@@ -16,23 +20,25 @@ import { Panel } from './panel'
 let i:number = 0;
 
 export function PanelWrapper() {
+  const dispatch: AppDispatch = useDispatch()
+
+
+  const { current } = useSelector((state: RootState) => state.current)
+  const { previous } = useSelector((state: RootState)=> state.previous)
+  useEffect(() => {
+    console.log("CURRENT")
+    console.log(current)
+    console.log("PREVIOUS")
+    console.log(previous)
+  }, [current, previous])
 // Definitions
       const camera = useContext(CamContext);
-      // let vec = new THREE.Vector3
-      let vec2 = new THREE.Vector3
-
-      // let page2: { name: string; 
-      //   link: string; 
-      //   description: string; 
-      //   scene: string;
-      //   panelPos: number[];
-      //   position: number[];}[];
-      // let page: { name: string; 
-      //   link: string; 
-      //   description: string; 
-      //   scene: string;
-      //   panelPos: number[];
-      //   position: number[];} = PageInfo[0]
+      let previous1: { name: string; 
+        link: string; 
+        description: string; 
+        scene: string;
+        panelPos: number[];
+        position: number[];} = PageInfo[0]
       let next: { name: string; 
         link: string; 
         description: string; 
@@ -40,87 +46,82 @@ export function PanelWrapper() {
         panelPos: number[];
         position: number[];} = PageInfo[0]
 
-      // const panelCont = document.getElementById("panelContainer")
-      // const windowWidth = window.document.body.clientWidth
-      // const windowHeight = window.document.body.clientHeight
-
 
 // Next Topic
-        function Next() {
-          console.log(camera?.scenes)
-
-            i++
+      function Next() {
+        if (current !== 'aria') {
+          console.log('before')
+          console.log(PageInfo[i].scene)
+          i++
+          console.log('after')
+          console.log(PageInfo[i].scene)
+          // if it is within the possible index range, set the next scene and the previous scene
             if (camera?.scenes && i < 4) {
-
               next = PageInfo[i]
-              console.log(i + " IIIII")
-              camera?.setScene(next.scene)
-              console.log(camera?.scenes)
-              camera?.setCam(vec2.set(next.position[0], next.position[1], next.position[2]))
+              let l = i - 1
+              if (l >= 0) {
+                previous1 = PageInfo[l]
+              }
 
-            } else {
-              console.log("there is no scene set yet")
+              console.log("NEXT")
+              console.log(next.scene)
+              if (l >= 0) {
+                console.log(PageInfo[l].scene)
+                dispatch(setPrevious(previous1.scene))
+              }
+              dispatch(setCurrent(next.scene))
+              dispatch(setDirection('forward'))
             }
-            console.log(camera?.scenes)
+            } else {
+              console.log("aria is the current scene")
+            }
         }
 // Previous Topic
         function Back() {
+
           console.log(camera?.scenes)
+          console.log('before')
+          console.log(PageInfo[i].scene)
+          if (i > 0) {
+            i = i - 1
+          } else {
+            i = 0
+          }
+          console.log('after')
+          console.log(PageInfo[i].scene)
 
-            i--
             if (camera?.scenes && i < 4) {
-
               next = PageInfo[i]
+              let l = i - 1
+              if (l >= 0) {
+                console.log("Previous 22")
+                console.log(PageInfo[l].scene)
+                previous1 = PageInfo[l]
+              }
               console.log(i + " IIIII")
-              camera?.setScene(next.scene)
-              camera?.setCam(vec2.set(next.position[0], next.position[1], next.position[2]))
+              console.log("BACK")
+              console.log(next)
+              if (l >= 0) {
+                dispatch(setPrevious(previous1.scene))
+              }
+              dispatch(setCurrent(next.scene))
+              dispatch(setDirection('backward'))
 
             } else {
               console.log("there is no scene set yet")
             }
-            console.log(camera?.scenes)
         }
-// Upon Selection, change camera position
-      //   useFrame(state => {
-      //       page2 = PageInfo.filter((item) => item.scene === camera?.scenes)
-      //       page = page2[0]
-      //       if (page.scene === "Volcap") {
-      //         state.camera.lookAt(vec.set(page.position[0], page.position[1] + 0.5, page.position[2]))
-      //       } else {
-      //         state.camera.lookAt(vec.set(page.position[0], page.position[1] - 1, page.position[2]))
-      //       }
-
-      //       state.camera.position.lerp(vec.set(page.position[0], page.position[1], page.position[2] + 5), .01)
-      //       camera?.setCam(vec.set( page.position[0], page.position[1], page.position[2] + 5 ))
-      //       window.addEventListener("resize", () => {
-      //         window.onresize = () => { 
-      //           if (panelCont) {  
-      //             if (windowWidth >= 600) { 
-      //               panelCont.style.left = (windowWidth / 5) + 'px'
-      //               panelCont.style.bottom = (windowHeight / 5) + 'px'
-      //             } else {
-      //               panelCont.style.bottom = (windowHeight / 1.5) + "px"
-      //               panelCont.style.left = (windowWidth / 2) + "px"
-      //             }
-      //           }
-      //         }})
-      //       state.camera.updateProjectionMatrix()
-      //   null
-      // })
-
 
   return(
-    // <Html zIndexRange={[6000000]}>
-        (camera?.scenes === PageInfo[0].scene) ?
-            <Panel text={PageInfo[0]} next={Next} back={Back}  /> :
-        (camera?.scenes === PageInfo[1].scene) ?
-            <Panel text={PageInfo[1]} next={Next} back={Back}  /> :
-        (camera?.scenes === PageInfo[2].scene) ?
-            <Panel text={PageInfo[2]} next={Next} back={Back}  /> :
-        (camera?.scenes === PageInfo[3].scene) ?
-            <Panel text={PageInfo[3]} next={Next} back={Back}  /> :
+        (current === PageInfo[0].scene) ?
+            <Panel text={PageInfo} next={Next} back={Back}  /> :
+        (current === PageInfo[1].scene) ?
+            <Panel text={PageInfo} next={Next} back={Back}  /> :
+        (current === PageInfo[2].scene) ?
+            <Panel text={PageInfo} next={Next} back={Back}  /> :
+        (current === PageInfo[3].scene) ?
+            <Panel text={PageInfo} next={Next} back={Back}  /> :
          null
-      // </Html>
   )
 }
 

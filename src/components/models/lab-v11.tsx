@@ -18,6 +18,8 @@ import * as volcapMp4F from "./volcap-scene.mp4"
 import * as vrMp4F from "./vr-scene.mp4"
 extend({ OrbitControls, useGLTF, PerspectiveCamera, useAnimations, useCamera, useThree})
 
+import { useDispatch, useSelector } from 'react-redux'
+
 export const Lab: React.FunctionComponent = (props:any) => {
 
   const [ camState, setCamState ] = useState('opening')
@@ -79,6 +81,7 @@ export const Lab: React.FunctionComponent = (props:any) => {
       actions['opening-camera-animation']?.setLoop(THREE.LoopOnce, 1)
       actions['VR-headset'].clampWhenFinished = true
       actions['VR-headset']?.setLoop(THREE.LoopOnce, 1)
+      //timeScale = 1;
 
       if (camera?.scenes === 'Loomo') {
         actions['opening-camera-animation']?.play()
