@@ -68,12 +68,22 @@ export const Lab: React.FunctionComponent = (props:any) => {
 
     useEffect(() => {
       // function changeScene() {
-
+        function handleVR(n: boolean) {
+          if (n === false) {
+            setVrVid(false)
+            actions['VR-headset']?.stop()
+          } else if (n === true) {
+            setVrVid(true)
+            actions['VR-headset']?.play()
+          }
+        }
         const loomoMixer = actions['loomo-camera-animation']?._mixer
         const volcapMixer = actions['vol-cap-camera-animation']?._mixer
         const vrMixer = actions['vr-camera-animation']?._mixer
         const ariaMixer = actions['aria-camera-animation']?._mixer
         const openingMixer = actions['opening-camera-animation']?._mixer
+
+
         actions['loomo-camera-animation'].clampWhenFinished = true
         actions['loomo-camera-animation']?.setLoop(THREE.LoopOnce, 1)
         actions['vol-cap-camera-animation'].clampWhenFinished = true
@@ -86,15 +96,6 @@ export const Lab: React.FunctionComponent = (props:any) => {
         actions['opening-camera-animation']?.setLoop(THREE.LoopOnce, 1)
         actions['VR-headset'].clampWhenFinished = true
         actions['VR-headset']?.setLoop(THREE.LoopOnce, 1)
-        function handleVR(n: boolean) {
-          if (n === false) {
-            setVrVid(false)
-            actions['VR-headset']?.stop()
-          } else if (n === true) {
-            setVrVid(true)
-            actions['VR-headset']?.play()
-          }
-        }
         //
         //
         // FORWARD
@@ -102,8 +103,9 @@ export const Lab: React.FunctionComponent = (props:any) => {
           //
           if (sceneA === 'Loomo') {
               // from home
+              actions['opening-camera-animation']?.stop()
               actions['opening-camera-animation']?.play()
-
+setCamState('Loomo')
               // on animation end
               openingMixer.addEventListener('finished', () => {
                 setCamState('Loomo')
@@ -114,13 +116,13 @@ export const Lab: React.FunctionComponent = (props:any) => {
               handleVR(false)
 
               // from loomo
+              actions['loomo-camera-animation']?.stop()
               actions['loomo-camera-animation'].timeScale = 1
               actions['loomo-camera-animation']?.play()
 
               // on animation end
               loomoMixer.addEventListener('finished', () => {
                 setCamState('Volcap')
-                loomoMixer.stopAllAction()
               })
           //
           } else if (sceneA === 'VR') {
@@ -128,11 +130,12 @@ export const Lab: React.FunctionComponent = (props:any) => {
               handleVR(true)
 
               // from volcap
+              actions['vol-cap-camera-animation']?.stop()
               actions['vol-cap-camera-animation'].timeScale = 1
               actions['vol-cap-camera-animation']?.play()
 
               // on animation end
-              volcapMixer.addEventListener('finished', () => {
+              vrMixer.addEventListener('finished', () => {
                 setCamState('VR')
               })
           //
@@ -141,13 +144,13 @@ export const Lab: React.FunctionComponent = (props:any) => {
               handleVR(false)
 
               // from vr
+              actions['vr-camera-animation']?.stop()
               actions['vr-camera-animation'].timeScale = 1
               actions['vr-camera-animation']?.play()
 
               // on animation end
               ariaMixer.addEventListener('finished', () => {
                 setCamState('Aria')
-                actions['aria-camera-animation']?.stop()
               })
           }
         //
