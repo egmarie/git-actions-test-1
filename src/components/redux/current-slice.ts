@@ -1,16 +1,26 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-const initialState = {
-  current: '',
-}
 
+const initial = {
+  name: '',
+  link: '',
+  description: '', 
+  sceneA: ''
+}
+export interface CurrentState {
+  name: string;
+  link: string;
+  description: string;
+  sceneA: string
+}
+const initialState: CurrentState = initial
 export const currentSlice = createSlice({
   name: 'current',
   initialState,
   reducers: {
     setCurrent: (state, action) => {
-      const c = action.payload
-      state.current= c
+      state = action.payload
+      return state
     },
   },
 })

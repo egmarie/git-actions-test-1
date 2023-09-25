@@ -28,7 +28,7 @@ export default function Intro1() {
     function Begin() {
 
         // camera?.setScene(PageInfo[0].scene)
-        dispatch(setCurrent(PageInfo[0].scene))
+        dispatch(setCurrent(PageInfo[0]))
 
     }
   return (

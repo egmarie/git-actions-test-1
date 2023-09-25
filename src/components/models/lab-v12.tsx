@@ -16,29 +16,24 @@ import * as THREE from "three"
 
 import { useSelector } from 'react-redux'
 import type { RootState } from '../redux/store'
-// import { setCurrent } from '../redux/current-slice'
-// import { setPrevious } from '../redux/previous-slice'
 import * as volcapMp4F from "./volcap-scene.mp4"
 import * as vrMp4F from "./vr-scene.mp4"
-extend({ OrbitControls, useGLTF, PerspectiveCamera, useAnimations, useCamera, useThree})
+extend({ OrbitControls, useGLTF, PerspectiveCamera, useAnimations, useCamera, useThree })
 
 export const Lab: React.FunctionComponent = (props:any) => {
 
   const [ camState, setCamState ] = useState('opening')
   const [ vrVid, setVrVid ] = useState(false)
   // const dispatch: AppDispatch = useDispatch()
-  const { current } = useSelector((state: RootState) => state.current)
-  const { previous } = useSelector((state: RootState)=> state.previous)
+  const { sceneA } = useSelector((state: RootState) => state.current)
   const { direction } = useSelector((state: RootState)=> state.direction)
   useEffect(() => {
     console.log("CURRENT")
-    console.log(current)
-    console.log("PREVIOUS")
-    console.log(previous)
+    console.log(sceneA)
   }, [])
   // const camera = useContext(CamContext)
   const { viewport } = useThree()
-  const { nodes, materials, animations, scene, cameras } = useGLTF('/lab-09-18.glb')
+  const { nodes, materials, animations, scene, cameras } = useGLTF('/gltf/lab-09-18.glb')
   const group = useRef()
   const { actions } = useAnimations(animations, group)
 
@@ -127,12 +122,16 @@ export const Lab: React.FunctionComponent = (props:any) => {
       //
       //
       // NEW ANIMATIONS
-      if (current === 'Loomo') {
+      console.log('loomo')
+      console.log(direction)
+      console.log(sceneA)
+      if (sceneA === 'Loomo') {
+
         actions['opening-camera-animation']?.play()
-        openingMixer.addEventListener('finished', () => {
-            setCamState('loomo') 
-        })
-      } else if (current === 'Volcap') {
+        // openingMixer.addEventListener('finished', () => {
+        //     setCamState('loomo') 
+        // })
+      } else if (sceneA === 'Volcap') {
           if (direction === 'forward') {
             // actions['loomo-camera-animation']?.timeScale(1)
             actions['loomo-camera-animation']?.play()
@@ -146,7 +145,7 @@ export const Lab: React.FunctionComponent = (props:any) => {
             actions['vol-cap-camera-animation']?.play()
 
           }
-      } else if (current === 'VR') {
+      } else if (sceneA === 'VR') {
             setVrVid(true)
 
             if (direction === 'forward') {
@@ -162,7 +161,7 @@ export const Lab: React.FunctionComponent = (props:any) => {
               actions['vr-camera-animation']?.play()
               actions['VR-headset']?.play()
             }
-      } else if (current === 'Aria') {
+      } else if (sceneA === 'Aria') {
             actions['vr-camera-animation']?.play()
             vrMixer.addEventListener('finished', () => {
               setCamState('aria')
@@ -170,7 +169,7 @@ export const Lab: React.FunctionComponent = (props:any) => {
       } else {
         console.log('There was an error with the camera scenes')
       }
-    })
+    }) // end useEffect
 
 
   actions['vol-cap-girl-animation']?.play()

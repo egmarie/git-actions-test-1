@@ -8,17 +8,18 @@ https://codesandbox.io/s/react-three-fiber-videotexture-and-effectcomposer-kwn81
 https://stackoverflow.com/questions/29974578/how-to-flip-a-three-js-texture-horizontally
 */
 
-import React, { useRef, Suspense, useContext, useEffect, useState } from 'react'
+import React, { useRef, Suspense, useEffect, useContext, useState } from 'react'
 import { useGLTF, PerspectiveCamera, useAnimations, OrbitControls, useCamera } from '@react-three/drei'
 import { extend, useThree } from '@react-three/fiber'
 import * as THREE from "three"
 import { CamContext } from '../-main-x'
 
+import { useSelector } from 'react-redux'
+import type { RootState } from '../redux/store'
 import * as volcapMp4F from "./volcap-scene.mp4"
 import * as vrMp4F from "./vr-scene.mp4"
 extend({ OrbitControls, useGLTF, PerspectiveCamera, useAnimations, useCamera, useThree})
 
-import { useDispatch, useSelector } from 'react-redux'
 
 export const Lab: React.FunctionComponent = (props:any) => {
 
@@ -31,7 +32,8 @@ export const Lab: React.FunctionComponent = (props:any) => {
   const { nodes, materials, animations, scene, cameras } = useGLTF('/gltf/lab-09-12-v2.glb')
   const group = useRef()
   const { actions } = useAnimations(animations, group)
-
+  const { sceneA } = useSelector((state: RootState) => state.current)
+  const { direction } = useSelector((state: RootState)=> state.direction)
   const vrRef = useRef()
   const volcapRef = useRef()
   const loomoRef = useRef()
@@ -41,6 +43,7 @@ export const Lab: React.FunctionComponent = (props:any) => {
   document.querySelector('canvas')?.addEventListener('click', () => {
     console.log('clicked')
     setVrVid(false)
+    actions['VR-headset']?.stop()
   })
 
   const [ volcapMp4 ] = useState(() => {
@@ -52,7 +55,6 @@ export const Lab: React.FunctionComponent = (props:any) => {
     vid.play();
     return vid;
   })
-
   const [ vrMp4 ] = useState(() => {
     const vid = document.createElement("video");
     vid.src = vrMp4F.default;
@@ -63,58 +65,240 @@ export const Lab: React.FunctionComponent = (props:any) => {
     return vid;
   })
 
+
     useEffect(() => {
-      const loomoMixer = actions['loomo-camera-animation']?._mixer
-      const volcapMixer = actions['vol-cap-camera-animation']?._mixer
-      const vrMixer = actions['vr-camera-animation']?._mixer
-      const ariaMixer = actions['aria-camera-animation']?._mixer
-      const openingMixer = actions['opening-camera-animation']?._mixer
-      actions['loomo-camera-animation'].clampWhenFinished = true
-      actions['loomo-camera-animation']?.setLoop(THREE.LoopOnce, 1)
-      actions['vol-cap-camera-animation'].clampWhenFinished = true
-      actions['vol-cap-camera-animation']?.setLoop(THREE.LoopOnce, 1)
-      actions['vr-camera-animation'].clampWhenFinished = true
-      actions['vr-camera-animation']?.setLoop(THREE.LoopOnce, 1)
-      actions['aria-camera-animation'].clampWhenFinished = true
-      actions['aria-camera-animation']?.setLoop(THREE.LoopOnce, 1)
-      actions['opening-camera-animation'].clampWhenFinished = true
-      actions['opening-camera-animation']?.setLoop(THREE.LoopOnce, 1)
-      actions['VR-headset'].clampWhenFinished = true
-      actions['VR-headset']?.setLoop(THREE.LoopOnce, 1)
-      //timeScale = 1;
+      // function changeScene() {
 
-      if (camera?.scenes === 'Loomo') {
-        actions['opening-camera-animation']?.play()
-        openingMixer.addEventListener('finished', () => {
-            setCamState('loomo') 
-        })
-      } else if (camera?.scenes === 'Volcap') {
-            actions['loomo-camera-animation']?.play()
-            loomoMixer.addEventListener('finished', () => {
-              console.log('finished')
-              setCamState('volcap')
-            })
-      } else if (camera?.scenes === 'VR') {
+        const loomoMixer = actions['loomo-camera-animation']?._mixer
+        const volcapMixer = actions['vol-cap-camera-animation']?._mixer
+        const vrMixer = actions['vr-camera-animation']?._mixer
+        const ariaMixer = actions['aria-camera-animation']?._mixer
+        const openingMixer = actions['opening-camera-animation']?._mixer
+        actions['loomo-camera-animation'].clampWhenFinished = true
+        actions['loomo-camera-animation']?.setLoop(THREE.LoopOnce, 1)
+        actions['vol-cap-camera-animation'].clampWhenFinished = true
+        actions['vol-cap-camera-animation']?.setLoop(THREE.LoopOnce, 1)
+        actions['vr-camera-animation'].clampWhenFinished = true
+        actions['vr-camera-animation']?.setLoop(THREE.LoopOnce, 1)
+        actions['aria-camera-animation'].clampWhenFinished = true
+        actions['aria-camera-animation']?.setLoop(THREE.LoopOnce, 1)
+        actions['opening-camera-animation'].clampWhenFinished = true
+        actions['opening-camera-animation']?.setLoop(THREE.LoopOnce, 1)
+        actions['VR-headset'].clampWhenFinished = true
+        actions['VR-headset']?.setLoop(THREE.LoopOnce, 1)
+        function handleVR(n: boolean) {
+          if (n === false) {
+            setVrVid(false)
+            actions['VR-headset']?.stop()
+          } else if (n === true) {
             setVrVid(true)
-            actions['vol-cap-camera-animation']?.play()
             actions['VR-headset']?.play()
-            volcapMixer.addEventListener('finished', () => {
-              setCamState('vr') 
+          }
+        }
+        //
+        //
+        // FORWARD
+        if (direction === 'forward') {
+          //
+          if (sceneA === 'Loomo') {
+              // from home
+              actions['opening-camera-animation']?.play()
 
-              actions['VR-headset']?.play()
-            })
-      } else if (camera?.scenes === 'Aria') {
-            actions['vr-camera-animation']?.play()
-            vrMixer.addEventListener('finished', () => {
-              setCamState('aria')
-            })
-      } else {
-          // actions['aria-camera-animation']?.play()
-          // ariaMixer.addEventListener('finished', () => {
-          //   setCamState('opening')
-          // })
+              // on animation end
+              openingMixer.addEventListener('finished', () => {
+                setCamState('Loomo')
+              })
+          //  
+          } else if (sceneA === 'Volcap') {
+              // turn vr off
+              handleVR(false)
+
+              // from loomo
+              actions['loomo-camera-animation'].timeScale = 1
+              actions['loomo-camera-animation']?.play()
+
+              // on animation end
+              loomoMixer.addEventListener('finished', () => {
+                setCamState('Volcap')
+                loomoMixer.stopAllAction()
+              })
+          //
+          } else if (sceneA === 'VR') {
+              // turn vr on
+              handleVR(true)
+
+              // from volcap
+              actions['vol-cap-camera-animation'].timeScale = 1
+              actions['vol-cap-camera-animation']?.play()
+
+              // on animation end
+              volcapMixer.addEventListener('finished', () => {
+                setCamState('VR')
+              })
+          //
+          } else if (sceneA === 'Aria') {
+              // turn vr off
+              handleVR(false)
+
+              // from vr
+              actions['vr-camera-animation'].timeScale = 1
+              actions['vr-camera-animation']?.play()
+
+              // on animation end
+              ariaMixer.addEventListener('finished', () => {
+                setCamState('Aria')
+                actions['aria-camera-animation']?.stop()
+              })
+          }
+        //
+        //
+        // BACKWARD
+        } else if (direction === 'backward') {
+            //
+            if (sceneA === 'Loomo') {
+              // turn vr off
+              handleVR(false)
+
+              //from volcap
+              setCamState('Loomo')
+
+              if (camState === 'Loomo') {
+                actions['vol-cap-camera-animation'].timeScale = -1
+                actions['vol-cap-camera-animation']?.play()
+              }
+          //
+          } else if (sceneA === 'Volcap') {
+              // turn vr off
+              handleVR(false)
+
+              // from vr
+              setCamState('Volcap')
+              if (camState === 'Volcap') {
+                actions['vr-camera-animation'].timeScale = -1
+                actions['vr-camera-animation']?.play()
+              }
+          //
+          } else if (sceneA === 'VR') {
+              // turn vr on
+              handleVR(true)
+
+              // from aria
+              setCamState('VR')
+              if (camState === 'VR') {
+                actions['aria-camera-animation'].timeScale = -1
+                actions['aria-camera-animation']?.play()
+              }
+          }
       }
-    })
+    //}
+    // changeScene()
+
+  //   if (sceneA === 'Loomo') {
+  //     setVrVid(false)
+  //     console.log(actions)
+  //     // FORWARD
+  //     if (direction === 'forward') {
+  //       actions['opening-camera-animation']?.play()
+  //       openingMixer.addEventListener('finished', () => {
+  //         actions['opening-camera-animation']?.stop()   
+  //         setCamState('loomo')
+  //       })
+  //     console.log("sceneA")
+  //     console.log(sceneA)
+  //  // BACKWARD
+  //     } else if (direction === 'backward') {
+  //       setCamState('loomo')
+  //       if (camState === 'loomo') {
+  //         actions['loomo-camera-animation'].timeScale = -1
+  //         actions['loomo-camera-animation']?.play()
+  //       }
+  //       console.log("sceneA")
+  //       console.log(sceneA)
+  //     }
+  //   } else if (sceneA === 'Volcap') {
+  //     // VOLCAP
+  //     //
+  //     setVrVid(false)
+  //     actions['VR-headset']?.stop()
+  //      // FORWARD
+  //       if (direction === 'forward') {
+  //         console.log(actions['loomo-camera-animation'])
+  //         actions['loomo-camera-animation'].timeScale = 1
+  //         actions['loomo-camera-animation']?.play()
+  //         loomoMixer.addEventListener('finished', () => {
+  //           console.log('finished')
+  //           setCamState('volcap')
+  //           actions['loomo-camera-animation']?.stop()
+  //         })
+    
+  //         console.log("sceneA")
+  //         console.log(sceneA)
+  //     // BACKWARD
+  //       } else if (direction === 'backward') {
+  //         setCamState('volcap')
+  //         if (camState === 'volcap') {
+  //           actions['vol-cap-camera-animation'].timeScale = -1
+  //           actions['vol-cap-camera-animation']?.play()
+  //         }
+  //         actions['vol-cap-camera-animation']?.stop()
+  //         console.log("sceneA")
+  //         console.log(sceneA)
+  //       }
+
+  //   } else if (sceneA === 'VR') {
+  //     // VR
+  //     //
+  //         setVrVid(true)
+  //         // FORWARD
+  //         if (direction === 'forward') {
+  //           actions['vol-cap-camera-animation'].timeScale = 1
+  //           actions['vol-cap-camera-animation']?.play()
+  //           actions['VR-headset']?.play()
+  //           vrMixer.addEventListener('finished', () => {
+  //             actions['vol-cap-camera-animation']?.stop()
+  //             setCamState('vr') 
+  //           })
+  //         // BACKWARD
+  //         } else if (direction === 'backward') {
+  //           setCamState('vr')
+  //           console.log(cameras)
+  //           console.log(camState)
+  //           if (camState === 'vr') {
+  //             actions['vr-camera-animation'].timeScale = -1
+  //             actions['vr-camera-animation']?.play()
+  //           }
+  //           actions['vr-camera-animation']?.stop()
+  //         }
+  //         console.log(cameras)
+  //   } else if (sceneA === 'Aria') {
+
+  //     // ARIA
+  //     //
+  //         setVrVid(false)
+  //       // FORWARD
+  //       if (direction === 'forward') {
+  //         actions['VR-headset']?.stop()
+  //         actions['vr-camera-animation'].timeScale = 1
+  //         actions['vr-camera-animation']?.play()
+  //         vrMixer.addEventListener('finished', () => {
+  //           actions['vr-camera-animation']?.stop()
+  //           setCamState('aria')
+  //         })
+        
+  //       } else if (direction === 'backward') {
+  //         setCamState('vr')
+  //         if (camState === 'vr') {
+  //           actions['vr-camera-animation'].timeScale = -1
+  //           actions['vr-camera-animation']?.play()
+  //         }
+  //         actions['vr-camera-animation']?.stop()
+  //       }
+  //   } else {
+  //     console.log('There was an error with the camera scenes')
+  //   }
+
+  })
+ // end useEffect
 
 
   actions['vol-cap-girl-animation']?.play()
@@ -136,6 +320,7 @@ export const Lab: React.FunctionComponent = (props:any) => {
   actions['LOOMO-side-core']?.play()
 
 // 
+// console.log(actions['ARIA-corner-1'])
   actions['ARIA-corner-1']?.play()
   actions['ARIA-corner-2']?.play()
   actions['ARIA-corner-3']?.play()
@@ -157,6 +342,7 @@ export const Lab: React.FunctionComponent = (props:any) => {
   actions['ARIA-ring-3']?.play()
   actions['ARIA-ring-4']?.play()
   actions['ARIA-ring-5']?.play()
+
 
   return (
     <Suspense fallback={null}>
@@ -305,11 +491,11 @@ export const Lab: React.FunctionComponent = (props:any) => {
           <primitive object={nodes.mixamorigHips} />
           <skinnedMesh name="secretary-model" geometry={nodes['secretary-model'].geometry} material={materials['Secreetary_shader.001']} skeleton={nodes['secretary-model'].skeleton} />
         </group>
-        <PerspectiveCamera ref={vrRef} name="vr-camera" makeDefault={camState === 'vr' ? true : false} far={1000} near={0.1} fov={22.895} position={[-5.164, 10.935, -1.95]} rotation={[-2.633, 0.718, 2.79]} />
-        <PerspectiveCamera ref={volcapRef} name="vol-cap-camera" makeDefault={camState === 'volcap' ? true : false} far={1000} near={0.1} fov={22.895} position={[10.569, 28.363, -25.707]} rotation={[-2.162, 0.874, 2.29]} />
-        <PerspectiveCamera ref={openingRef} name="opening-camera" makeDefault={camState === 'opening' ? true : false} far={1000} near={0.1} fov={22.895} position={[81.283, 63.531, -86.473]} rotation={[-2.523, 0.701, 2.711]} />
-        <PerspectiveCamera ref={loomoRef} name="loomo-camera" makeDefault={camState === 'loomo' ? true : false} far={1000} near={0.1} fov={22.895} position={[11.43, 13.003, -24.303]} rotation={[-2.454, 0.624, 2.694]} />
-        <PerspectiveCamera ref={ariaRef} name="aria-camera" makeDefault={camState === 'aria' ? true : false} far={1000} near={0.1} fov={22.895} position={[22.311, 20.733, -15.631]} rotation={[-2.67, 0.528, 2.89]} />
+        <PerspectiveCamera name="vr-camera" makeDefault={camState === 'vr' ? true : false} far={1000} near={0.1} fov={22.895} position={[-5.164, 10.935, -1.95]} rotation={[-2.633, 0.718, 2.79]} />
+        <PerspectiveCamera name="vol-cap-camera" makeDefault={camState === 'volcap' ? true : false} far={1000} near={0.1} fov={22.895} position={[10.569, 28.363, -25.707]} rotation={[-2.162, 0.874, 2.29]} />
+        <PerspectiveCamera name="opening-camera" makeDefault={camState === 'opening' ? true : false} far={1000} near={0.1} fov={22.895} position={[81.283, 63.531, -86.473]} rotation={[-2.523, 0.701, 2.711]} />
+        <PerspectiveCamera name="loomo-camera" makeDefault={camState === 'loomo' ? true : false} far={1000} near={0.1} fov={22.895} position={[11.43, 13.003, -24.303]} rotation={[-2.454, 0.624, 2.694]} />
+        <PerspectiveCamera name="aria-camera" makeDefault={camState === 'aria' ? true : false} far={1000} near={0.1} fov={22.895} position={[22.311, 20.733, -15.631]} rotation={[-2.67, 0.528, 2.89]} />
         <pointLight name="loomo-light" intensity={1.194} decay={2} position={[-1.251, -0.932, -42.463]} rotation={[3.13, -0.111, 2.801]} scale={1.831} /> 
         <pointLight name="outside-light-2" intensity={1} decay={2} color="#ffb95c" position={[-69.836, 9.268, 18.928]} rotation={[2.84, 1.108, -1.3]} scale={[-4.209, -21.145, -20.963]} />
         <pointLight name="main-light" intensity={1.5} decay={2} color="#ffedca" position={[-12.195, 36.175, 8.69]} rotation={[-Math.PI / 2, 0, 0]} scale={3.635} />
